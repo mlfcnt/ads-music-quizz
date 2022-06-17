@@ -1,5 +1,5 @@
 import React from "react";
-import { Track } from "../../api/spotify";
+import { Track } from "../api/spotify";
 
 export const Player = ({ trackId }: { trackId: Track["id"] }) => {
   return (

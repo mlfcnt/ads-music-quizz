@@ -2,7 +2,7 @@ import { Autocomplete, Box, Button, Group } from "@mantine/core";
 import { useForm } from "@mantine/hooks";
 import React, { useState } from "react";
 import { useDebounce } from "react-use";
-import { useArtistSugestions } from "../../hooks/useArtistSugestions";
+import { useArtistSugestions } from "../hooks/useArtistSugestions";
 
 export const GuessForm = () => {
   const [guess, setGuess] = useState("");

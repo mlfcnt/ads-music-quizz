@@ -1,8 +1,8 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { Container, Space, Title } from "@mantine/core";
 import { getTrackToPlay, Track } from "../api/spotify";
-import { Player } from "./components/Player";
-import { GuessForm } from "./components/GuessForm";
+import { Player } from "../components/Player";
+import { GuessForm } from "../components/GuessForm";
 
 type Props = {
   trackId: Track["id"];
