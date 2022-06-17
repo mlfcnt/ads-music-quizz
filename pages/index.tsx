@@ -1,6 +1,8 @@
 import type { GetServerSideProps, NextPage } from "next";
-import { Container, Group, Space, Title } from "@mantine/core";
+import { Container, Space, Title } from "@mantine/core";
 import { getTrackToPlay, Track } from "../api/spotify";
+import { Player } from "./components/Player";
+import { GuessForm } from "./components/GuessForm";
 
 type Props = {
   trackId: Track["id"];
@@ -13,18 +15,11 @@ const Home: NextPage<Props> = ({ trackId }) => {
         ADS music quiz
       </Title>
       <Space h="lg" />
+      {trackId && <Player trackId={trackId} />}
       <Space h="lg" />
-      {trackId && (
-        <iframe
-          style={{ borderRadius: "12px" }}
-          src={`https://open.spotify.com/embed/track/${trackId}?utm_source=generator&theme=0`}
-          width="100%"
-          height="380"
-          frameBorder="0"
-          allowFullScreen={false}
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        />
-      )}
+      <Title order={2}>Essai 1/5</Title>
+      <Space h="lg" />
+      <GuessForm />
     </Container>
   );
 };
