@@ -105,14 +105,12 @@ export const searchArtistsByName = async (name: string) => {
   if (!name?.length) return;
   const url = "https://api.spotify.com/v1/search";
   const accessToken = await requestAccessToken();
-  console.log({ accessToken });
   const res = await fetch(`${url}?q=${name}&type=artist`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   });
   const { artists } = await res.json();
-  console.log({ artists });
   //TODO type
   return artists?.items?.map((x: any) => x.name) || [];
 };
