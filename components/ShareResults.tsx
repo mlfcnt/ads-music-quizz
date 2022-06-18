@@ -14,5 +14,5 @@ export const ShareResults = ({ guessNumber, hasLost }: Props) => {
       </p>
     );
   }
-  return <p>Vous avez trouvé en {guessNumber} essais! Bravo</p>;
+  return <p>Vous avez trouvé en {guessNumber} essai(s)! Bravo</p>;
 };
