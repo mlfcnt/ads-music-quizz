@@ -1,27 +1,27 @@
 {
   "artistOfTheDay": {
-    "name": "De Palmas",
-    "id": "5GUi6Czd9ReKfaRGQsi9dI",
+    "name": "The Fray",
+    "id": "0zOcE3mg9nS6l3yxt1Y0bK",
     "tracks": [
       {
-        "name": "Tomber",
-        "popularity": 41,
-        "uri": "0n86BLnKqrgCGY1cpvKDzf"
+        "name": "Never Say Never",
+        "popularity": 68,
+        "uri": "57uX2vR9j9DNiANDYfXw1i"
       },
       {
-        "name": "Elle habite ici",
-        "popularity": 42,
-        "uri": "2rFRub1hMwEc4u1jKaHbrb"
+        "name": "Over My Head (Cable Car)",
+        "popularity": 69,
+        "uri": "1N62wozuHCvczCkY4QidpP"
       },
       {
-        "name": "Une seule vie (Marcher dans le sable)",
-        "popularity": 48,
-        "uri": "0c7ppMQFvEFnt1cpxUSH56"
+        "name": "Look After You",
+        "popularity": 71,
+        "uri": "5l6hpyTGBK0LAAxgPnqTQL"
       },
       {
-        "name": "J'en rêve encore - Radio Edit",
-        "popularity": 49,
-        "uri": "07aWTEpDmPPCx5XkqhRHfH"
+        "name": "You Found Me",
+        "popularity": 74,
+        "uri": "4IoYz8XqqdowINzfRrFnhi"
       }
     ]
   }
