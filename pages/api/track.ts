@@ -5,7 +5,7 @@ import {
   getTopTacksFromArtist,
   Track,
 } from "../../api/spotify";
-import db from "../../db";
+import { supabase } from "../../supabaseClient";
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,15 +16,19 @@ export default async function handler(
   const artist = getArtistFromPlaylist(playlist);
   //TODO ne pas pick un artist si il a deja ete selectionné dans le passé ?
   const topTracks = await getTopTacksFromArtist(artist.id);
-  //@ts-ignore
-  db.data = {
-    artistOfTheDay: {
-      name: artist.name,
-      id: artist.id,
+
+  //TODO gestion des erreurs
+
+  const { error } = await supabase.from("artist-of-the-day").insert([
+    {
+      artistId: artist.id,
+      artistName: artist.name,
       tracks: getFiveMostPopoularTracksFromArtist(topTracks),
     },
-  };
-  db.write();
+  ]);
+
+  console.log(error);
+
   res.status(200).json("cool");
 }
 

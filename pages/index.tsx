@@ -43,11 +43,10 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await getArtistOfTheDay();
-  console.log({ res });
+  const artistOfTheDay = await getArtistOfTheDay();
   return {
     props: {
-      artistForToday: res?.artistOfTheDay || {},
+      artistForToday: artistOfTheDay || {},
     },
   };
 };
