@@ -1,17 +1,23 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { Container, Space, Title } from "@mantine/core";
-import { getTrackToPlay, Track } from "../api/spotify";
+import { getArtistOfTheDay, Track } from "../api/spotify";
 import { Player } from "../components/Player";
 import { GuessForm } from "../components/GuessForm";
 
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import { CountdownToNextGame } from "../components/CountdownToNextGame";
+import { useState } from "react";
 
 type Props = {
-  trackId: Track["id"];
+  artistForToday: {
+    name: string;
+    id: string;
+    tracks: Track[];
+  };
 };
 
-const Home: NextPage<Props> = ({ trackId }) => {
+const Home: NextPage<Props> = ({ artistForToday }) => {
+  const [guessNumber, setGuessNumber] = useState(1);
   return (
     <Container>
       <Space h="xl" />
@@ -21,9 +27,11 @@ const Home: NextPage<Props> = ({ trackId }) => {
       </Title>
 
       <Space h="lg" />
-      {trackId && <Player trackId={trackId} />}
+      {artistForToday?.tracks[guessNumber - 1].uri && (
+        <Player trackId={artistForToday.tracks[guessNumber - 1].uri} />
+      )}
       <Space h="lg" />
-      <Title order={2}>Essai 1/5</Title>
+      <Title order={2}>Essai {guessNumber}/5</Title>
       <Space h="lg" />
       <GuessForm />
       <CountdownToNextGame />
@@ -34,10 +42,10 @@ const Home: NextPage<Props> = ({ trackId }) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const trackToPlay = await getTrackToPlay();
+  const { artistOfTheDay } = await getArtistOfTheDay();
   return {
     props: {
-      trackId: trackToPlay,
+      artistForToday: artistOfTheDay,
     },
   };
 };

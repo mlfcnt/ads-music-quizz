@@ -1,0 +1,28 @@
+{
+  "artistOfTheDay": {
+    "name": "De Palmas",
+    "id": "5GUi6Czd9ReKfaRGQsi9dI",
+    "tracks": [
+      {
+        "name": "Tomber",
+        "popularity": 41,
+        "uri": "0n86BLnKqrgCGY1cpvKDzf"
+      },
+      {
+        "name": "Elle habite ici",
+        "popularity": 42,
+        "uri": "2rFRub1hMwEc4u1jKaHbrb"
+      },
+      {
+        "name": "Une seule vie (Marcher dans le sable)",
+        "popularity": 48,
+        "uri": "0c7ppMQFvEFnt1cpxUSH56"
+      },
+      {
+        "name": "J'en rêve encore - Radio Edit",
+        "popularity": 49,
+        "uri": "07aWTEpDmPPCx5XkqhRHfH"
+      }
+    ]
+  }
+}

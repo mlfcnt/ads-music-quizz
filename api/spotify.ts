@@ -16,6 +16,9 @@ export type Track = {
   album: any;
   artists: Artist[];
   id: string;
+  name: string;
+  popularity: number;
+  uri: string;
 };
 
 export type Artist = {
@@ -102,10 +105,10 @@ export const getTopTacksFromArtist = async (
   return tracks;
 };
 
-export const getTrackToPlay = async () => {
-  const res = await fetch(`${baseUrl}/api/track`);
-  const trackId = await res.json();
-  return trackId;
+export const getArtistOfTheDay = async () => {
+  const res = await fetch(`${baseUrl}/api/artist-of-the-day`);
+  const artistOfTheDay = await res.json();
+  return artistOfTheDay;
 };
 
 export const searchArtistsByName = async (name: string) => {
