@@ -26,6 +26,11 @@ export type Artist = {
 // https://developer.spotify.com/documentation/general/guides/authorization/client-credentials/
 // https://leerob.io/blog/spotify-api-nextjs
 
+const baseUrl =
+  process.env.NODE_ENV !== "production"
+    ? "http://localhost:3000"
+    : "https://ads-music-quizz.vercel.app/";
+
 export const requestAccessToken = async () => {
   const SPOTIFY_TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
   if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
@@ -98,14 +103,9 @@ export const getTopTacksFromArtist = async (
 };
 
 export const getTrackToPlay = async () => {
-  const playlist = await getPlaylist();
-  const artist = getArtistFromPlaylist(playlist);
-  //TODO ne pas pick un artiste si il a deja ete selectionné dans le passé ?
-  const topTracks = await getTopTacksFromArtist(artist.id);
-  // random top 10 song from artist
-  //TODO passer le numero de lessai et renvoyer une difficulté conséquente (de + dur a moins dur)
-  const randomTrackIndex = Math.floor(Math.random() * topTracks.length);
-  return topTracks[randomTrackIndex].id;
+  const res = await fetch(`${baseUrl}/api/track`);
+  const trackId = await res.json();
+  return trackId;
 };
 
 export const searchArtistsByName = async (name: string) => {
