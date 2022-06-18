@@ -108,7 +108,6 @@ export const getTopTacksFromArtist = async (
 export const getArtistOfTheDay = async () => {
   const res = await fetch(`${baseUrl}/api/artist-of-the-day`);
 
-  console.log({ res });
   const artistOfTheDay = await res.json();
   return artistOfTheDay;
 };
