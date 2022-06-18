@@ -25,9 +25,10 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
       <Title order={1} style={{ textAlign: "center" }}>
         ADS music quiz
       </Title>
+      {!artistForToday.id && <p>Erreur.. pas dartiste... bravo tommy</p>}
 
       <Space h="lg" />
-      {artistForToday?.tracks[guessNumber - 1].uri && (
+      {artistForToday?.tracks?.[guessNumber - 1]?.uri && (
         <Player trackId={artistForToday.tracks[guessNumber - 1].uri} />
       )}
       <Space h="lg" />
@@ -42,10 +43,11 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { artistOfTheDay } = await getArtistOfTheDay();
+  const res = await getArtistOfTheDay();
+  console.log({ res });
   return {
     props: {
-      artistForToday: artistOfTheDay,
+      artistForToday: res?.artistOfTheDay || {},
     },
   };
 };
