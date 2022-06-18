@@ -6,6 +6,7 @@ import {
   MantineProvider,
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
+import { Default as MainLayout } from "../layout/Default";
 
 export default function App(props: AppProps) {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -39,7 +40,9 @@ export default function App(props: AppProps) {
             colorScheme,
           }}
         >
-          <Component {...pageProps} />
+          <MainLayout>
+            <Component {...pageProps} />
+          </MainLayout>
         </MantineProvider>
       </ColorSchemeProvider>
     </>

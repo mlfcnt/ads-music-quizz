@@ -1,12 +1,11 @@
 import type { GetServerSideProps, NextPage } from "next";
-import { Container, Space, Title } from "@mantine/core";
+import { Space } from "@mantine/core";
 import { getArtistOfTheDay, Track } from "../api/spotify";
 import { Player } from "../components/Player";
 import { GuessForm } from "../components/GuessForm";
-
-import { ThemeSwitcher } from "../components/ThemeSwitcher";
-import { CountdownToNextGame } from "../components/CountdownToNextGame";
 import { useState } from "react";
+import { Guesses } from "../components/Guesses";
+import { ShareResults } from "../components/ShareResults";
 
 type Props = {
   artistForToday: {
@@ -18,13 +17,19 @@ type Props = {
 
 const Home: NextPage<Props> = ({ artistForToday }) => {
   const [guessNumber, setGuessNumber] = useState(1);
+  const [hasWon, setHasWon] = useState(false);
+  const [hasLost, setHasLost] = useState(false);
+
+  const incrementGuessNumber = () => {
+    if (guessNumber === 5) {
+      setHasLost(true);
+      return;
+    }
+    setGuessNumber(guessNumber + 1);
+  };
+
   return (
-    <Container>
-      <Space h="xl" />
-      <ThemeSwitcher />
-      <Title order={1} style={{ textAlign: "center" }}>
-        ADS music quiz
-      </Title>
+    <>
       {!artistForToday.id && <p>Erreur.. pas dartiste... bravo tommy</p>}
 
       <Space h="lg" />
@@ -32,11 +37,25 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
         <Player trackId={artistForToday.tracks[guessNumber - 1].uri} />
       )}
       <Space h="lg" />
-      <Title order={2}>Essai {guessNumber}/5</Title>
-      <Space h="lg" />
-      <GuessForm />
-      <CountdownToNextGame />
-    </Container>
+      {!hasWon && !hasLost && (
+        <>
+          <Guesses currentGuessNumber={guessNumber} />
+          <Space h="lg" />
+          <GuessForm
+            artistToFind={artistForToday.name}
+            incrementGuessNumber={incrementGuessNumber}
+            setHasWon={setHasWon}
+          />
+        </>
+      )}
+      {(hasWon || hasLost) && (
+        <ShareResults
+          guessNumber={guessNumber}
+          hasWon={hasWon}
+          hasLost={hasLost}
+        />
+      )}
+    </>
   );
 };
 

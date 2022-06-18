@@ -1,10 +1,19 @@
 import { Autocomplete, Box, Button, Group } from "@mantine/core";
-import { useForm } from "@mantine/hooks";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { useDebounce } from "react-use";
 import { useArtistSugestions } from "../hooks/useArtistSugestions";
 
-export const GuessForm = () => {
+type Props = {
+  artistToFind: string;
+  incrementGuessNumber: () => void;
+  setHasWon: Dispatch<SetStateAction<boolean>>;
+};
+
+export const GuessForm = ({
+  artistToFind,
+  incrementGuessNumber,
+  setHasWon,
+}: Props) => {
   const [guess, setGuess] = useState("");
   const [debouncedValue, setDebouncedValue] = useState("");
   const autompleteArtists = useArtistSugestions({
@@ -19,14 +28,19 @@ export const GuessForm = () => {
     [guess]
   );
 
-  const form = useForm({
-    initialValues: {
-      guess: "",
-    },
-  });
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    if (guess?.toLowerCase() === artistToFind.toLowerCase()) {
+      setHasWon(true);
+      return;
+    }
+    setGuess("");
+    incrementGuessNumber();
+  };
+
   return (
     <Box mx="auto">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form>
         <Autocomplete
           label="Qui est cet artiste...?"
           data={autompleteArtists || []}
@@ -34,7 +48,9 @@ export const GuessForm = () => {
           onChange={setGuess}
         />
         <Group mt="md" position="right">
-          <Button type="submit">Envoyer</Button>
+          <Button type="submit" onClick={handleSubmit}>
+            Envoyer
+          </Button>
         </Group>
       </form>
     </Box>
