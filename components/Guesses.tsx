@@ -1,3 +1,4 @@
+import { Title } from "@mantine/core";
 import React from "react";
 
 type Props = {
@@ -7,5 +8,9 @@ type Props = {
 export const Guesses = ({ currentGuessNumber }: Props) => {
   const maxGuessAmount = 5;
   if (currentGuessNumber === maxGuessAmount) return null;
-  return <p>{maxGuessAmount - currentGuessNumber + 1} essai(s) restant</p>;
+  return (
+    <Title order={5}>
+      {maxGuessAmount - currentGuessNumber + 1} essai(s) restant(s)
+    </Title>
+  );
 };

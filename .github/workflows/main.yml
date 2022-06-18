@@ -3,7 +3,7 @@ name: Scheduled Ping
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string.
-    - cron: "0 */1 * * *" # every hour
+    - cron: "0 * * * *" # every hour at minute 0
 
 jobs:
   pinger_job:

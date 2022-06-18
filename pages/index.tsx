@@ -38,13 +38,14 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
       <Space h="lg" />
       {!hasWon && !hasLost && (
         <>
-          <Guesses currentGuessNumber={guessNumber} />
           <Space h="lg" />
           <GuessForm
             artistToFind={artistForToday.name}
             incrementGuessNumber={() => incrementGuessNumber(guessNumber)}
             setHasWon={setHasWon}
           />
+          <Space h="lg" />
+          <Guesses currentGuessNumber={guessNumber} />
         </>
       )}
       {(hasWon || hasLost) && (
