@@ -19,7 +19,7 @@ export default async function handler(
 
   //TODO gestion des erreurs
 
-  const { error } = await supabase.from("artist-of-the-day").insert([
+  const { error, data } = await supabase.from("artist-of-the-day").insert([
     {
       artistId: artist.id,
       artistName: artist.name,
@@ -29,12 +29,12 @@ export default async function handler(
 
   console.log(error);
 
-  res.status(200).json("cool");
+  res.status(200).json(data);
 }
 
 const getFiveMostPopoularTracksFromArtist = (topTracks: Track[]) => {
   let tracks = [];
-  for (let index = 1; index < 5; index++) {
+  for (let index = 0; index < 5; index++) {
     tracks.push({
       name: topTracks[index].name,
       popularity: topTracks[index].popularity,

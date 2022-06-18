@@ -16,18 +16,21 @@ type Props = {
 };
 
 const Home: NextPage<Props> = ({ artistForToday }) => {
+  console.log(
+    "👽CLG - file: index.tsx - line 19 - artistForToday",
+    artistForToday
+  );
   const [guessNumber, setGuessNumber] = useState(1);
   const [hasWon, setHasWon] = useState(false);
   const [hasLost, setHasLost] = useState(false);
 
-  const incrementGuessNumber = () => {
+  const incrementGuessNumber = (guessNumber: number) => {
     if (guessNumber === 5) {
       setHasLost(true);
       return;
     }
     setGuessNumber(guessNumber + 1);
   };
-
   return (
     <>
       {!artistForToday.id && <p>Erreur.. pas dartiste... bravo tommy</p>}
@@ -43,17 +46,13 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
           <Space h="lg" />
           <GuessForm
             artistToFind={artistForToday.name}
-            incrementGuessNumber={incrementGuessNumber}
+            incrementGuessNumber={() => incrementGuessNumber(guessNumber)}
             setHasWon={setHasWon}
           />
         </>
       )}
       {(hasWon || hasLost) && (
-        <ShareResults
-          guessNumber={guessNumber}
-          hasWon={hasWon}
-          hasLost={hasLost}
-        />
+        <ShareResults guessNumber={guessNumber} hasLost={hasLost} />
       )}
     </>
   );

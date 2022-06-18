@@ -42,7 +42,7 @@ export const GuessForm = ({
     <Box mx="auto">
       <form>
         <Autocomplete
-          label="Qui est cet artiste...?"
+          label="Quel est cet artiste...?"
           data={autompleteArtists || []}
           value={guess}
           onChange={setGuess}
