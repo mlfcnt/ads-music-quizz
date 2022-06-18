@@ -1,5 +1,7 @@
 //TODO purify
 
+import { playlists } from "../playlists";
+
 //TODO
 type Playlist = {
   tracks: {
@@ -57,9 +59,10 @@ export const getPlaylist = async () => {
   const url = "https://api.spotify.com/v1/playlists";
   const accessToken = await requestAccessToken();
 
-  //TODO search from multiple playlists ?
-  const playlistId = "0cY1qx19t14YlfMkbW0HIw";
-  const res = await fetch(url + `/${playlistId}`, {
+  const randomPlaylistId =
+    playlists[Math.floor(Math.random() * playlists.length)].id;
+
+  const res = await fetch(url + `/${randomPlaylistId}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -97,8 +100,12 @@ export const getTopTacksFromArtist = async (
 export const getTrackToPlay = async () => {
   const playlist = await getPlaylist();
   const artist = getArtistFromPlaylist(playlist);
+  //TODO ne pas pick un artiste si il a deja ete selectionné dans le passé ?
   const topTracks = await getTopTacksFromArtist(artist.id);
-  return topTracks[0].id;
+  // random top 10 song from artist
+  //TODO passer le numero de lessai et renvoyer une difficulté conséquente (de + dur a moins dur)
+  const randomTrackIndex = Math.floor(Math.random() * topTracks.length);
+  return topTracks[randomTrackIndex].id;
 };
 
 export const searchArtistsByName = async (name: string) => {
