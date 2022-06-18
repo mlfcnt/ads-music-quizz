@@ -7,6 +7,7 @@ import {
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { Default as MainLayout } from "../layout/Default";
+import "../styles/globals.css";
 
 export default function App(props: AppProps) {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({

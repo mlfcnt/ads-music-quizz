@@ -1,17 +1,16 @@
 import React from "react";
 import { Track } from "../api/spotify";
+import { useOembedPlayer } from "../hooks/useOembedPlayer";
 
 export const Player = ({ trackId }: { trackId: Track["id"] }) => {
-  return (
-    <iframe
-      className="spotify"
-      style={{ borderRadius: "12px" }}
-      src={`https://open.spotify.com/embed/track/${trackId}?utm_source=generator&theme=0`}
-      width="100%"
-      height="380"
-      frameBorder="0"
-      allowFullScreen={false}
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+  const oEmbed = useOembedPlayer(trackId);
+
+  const createMarkup = (html: any) => ({ __html: html });
+
+  return oEmbed?.html ? (
+    <div
+      dangerouslySetInnerHTML={createMarkup(oEmbed?.html)}
+      className="spotify-oembed"
     />
-  );
+  ) : null;
 };

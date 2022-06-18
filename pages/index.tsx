@@ -16,10 +16,6 @@ type Props = {
 };
 
 const Home: NextPage<Props> = ({ artistForToday }) => {
-  console.log(
-    "👽CLG - file: index.tsx - line 19 - artistForToday",
-    artistForToday
-  );
   const [guessNumber, setGuessNumber] = useState(1);
   const [hasWon, setHasWon] = useState(false);
   const [hasLost, setHasLost] = useState(false);
