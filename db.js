@@ -1,8 +1,9 @@
 import { LowSync, JSONFileSync } from "lowdb";
+import path from "path";
 
-const isDev = process.env.NODE_ENV !== "production";
+const file = path.join(process.cwd(), "db.json");
+const db = new LowSync(new JSONFileSync(file));
 
-const db = new LowSync(new JSONFileSync(isDev ? "db.json" : "tmp/db.json"));
 db.read();
 
 export default db;

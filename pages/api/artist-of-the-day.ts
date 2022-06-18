@@ -5,6 +5,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const trackDb = db.data;
-  res.status(200).json(trackDb);
+  const artistOfTheDay = db.data;
+  console.log("db", { artistOfTheDay });
+  res.status(200).json(artistOfTheDay);
 }
