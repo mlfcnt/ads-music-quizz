@@ -48,7 +48,7 @@ export const GuessForm = ({
           onChange={setGuess}
         />
         <Group mt="md" position="right">
-          <Button type="submit" onClick={handleSubmit}>
+          <Button type="submit" onClick={handleSubmit} color="orange">
             Envoyer
           </Button>
         </Group>

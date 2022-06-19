@@ -1,3 +1,4 @@
+import { Text } from "@mantine/core";
 import React from "react";
 import { useTimeRemainingToNextArtist } from "../hooks/useTimeRemainingToNextArtist";
 
@@ -5,16 +6,8 @@ export const CountdownToNextGame = () => {
   const timeRemainingToNextArtist = useTimeRemainingToNextArtist();
 
   return (
-    <span
-      style={{
-        position: "absolute",
-        left: "50%",
-        bottom: "20px",
-        margin: "0 auto",
-        transform: "translate(-50%, -50%)",
-      }}
-    >
+    <Text size="sm" align="center" color="dimmed">
       Prochaine partie {timeRemainingToNextArtist} ...
-    </span>
+    </Text>
   );
 };

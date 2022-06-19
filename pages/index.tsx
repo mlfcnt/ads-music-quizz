@@ -77,9 +77,14 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
         <Player trackId={artistForToday.tracks[guessNumber - 1].uri} />
       )}
       <Space h="lg" />
+      <Space h="xl" />
+      <Guesses currentGuessNumber={guessNumber} guesses={guesses} />
+      <Space h="xl" />
       {!hasWon && !hasLost && (
         <>
-          <Space h="lg" />
+          <Space h="xl" />
+          <Space h="xl" />
+          <Space h="xl" />
           <GuessForm
             artistToFind={artistForToday.name}
             incrementGuessNumber={() => incrementGuessNumber(guessNumber)}
@@ -88,9 +93,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
           <Space h="lg" />
         </>
       )}
-      <Space h="xl" />
-      <Guesses currentGuessNumber={guessNumber} guesses={guesses} />
-      <Space h="xl" />
+
       {(hasWon || hasLost) && (
         <ShareResults guessNumber={guessNumber} hasLost={hasLost} />
       )}

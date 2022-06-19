@@ -13,14 +13,14 @@ export const Default = ({ children }: Props) => {
     <Container>
       <Space h="xl" />
       <ThemeSwitcher />
-      <Title order={1} style={{ textAlign: "center" }}>
-        ADS music quiz
+      <Title order={1} align="center" style={{ color: "lightblue" }}>
+        ADS Music Quiz
       </Title>
+      <CountdownToNextGame />
       <Space h="lg" />
       <Rules />
       <Space h="lg" />
       {children}
-      <CountdownToNextGame />
     </Container>
   );
 };

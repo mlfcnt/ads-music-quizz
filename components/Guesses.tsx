@@ -47,11 +47,12 @@ export const Guesses = ({ currentGuessNumber, guesses }: Props) => {
 
     for (let index = 1; index < 6; index++) {
       checkboxes.push(
-        <Grid.Col span={isMobile ? 2 : 1}>
+        <Grid.Col span={isMobile ? 2 : 1} key={index}>
           <Checkbox
             //@ts-ignore
             icon={displayCorrectIcon(guesses[index])}
             checked
+            onChange={() => {}}
             size="xl"
             color={displayCorrectColor(guesses[index])}
           />
