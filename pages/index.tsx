@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Guesses } from "../components/Guesses";
 import { ShareResults } from "../components/ShareResults";
 import { ArtistForToday, Guesses as GuessesType } from "../types";
-import { initGuesses } from "./lib";
+import { initGuesses } from "../lib";
 import { AfterGameRecap } from "../components/AfterGameRecap";
 
 type Props = {

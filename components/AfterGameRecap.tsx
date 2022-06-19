@@ -1,6 +1,6 @@
 import { Button, Card, Checkbox, Collapse, Space, Text } from "@mantine/core";
 import React, { useState } from "react";
-import { displayCorrectColor, displayCorrectIcon } from "../pages/lib";
+import { displayCorrectColor, displayCorrectIcon } from "../lib";
 import { ArtistForToday, Guesses } from "../types";
 
 type Props = {

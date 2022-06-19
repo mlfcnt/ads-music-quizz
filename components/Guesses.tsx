@@ -1,7 +1,7 @@
 import { Checkbox, Grid, Text } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import React from "react";
-import { displayCorrectColor, displayCorrectIcon } from "../pages/lib";
+import { displayCorrectColor, displayCorrectIcon } from "../lib";
 
 type Props = {
   currentGuessNumber: number;
