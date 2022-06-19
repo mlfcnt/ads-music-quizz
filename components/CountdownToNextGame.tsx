@@ -7,7 +7,7 @@ export const CountdownToNextGame = () => {
   return (
     <span
       style={{
-        position: "fixed",
+        position: "absolute",
         left: "50%",
         bottom: "20px",
         margin: "0 auto",
