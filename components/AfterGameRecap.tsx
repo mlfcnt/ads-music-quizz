@@ -17,7 +17,7 @@ export const AfterGameRecap = ({ guesses, artistForToday }: Props) => {
     for (let index = 1; index < 6; index++) {
       checkboxesAndText.push(
         <>
-          <div style={{ display: "flex", alignItems: "flex-end" }}>
+          <div style={{ display: "flex", alignItems: "flex-end" }} key={index}>
             <Checkbox
               //@ts-ignore
               icon={displayCorrectIcon(guesses[index])}

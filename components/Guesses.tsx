@@ -1,5 +1,5 @@
-import { Checkbox, Grid } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
+import { Checkbox, Grid, Text } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import React from "react";
 import { displayCorrectColor, displayCorrectIcon } from "../pages/lib";
 
@@ -14,9 +14,7 @@ type Props = {
 };
 
 export const Guesses = ({ currentGuessNumber, guesses }: Props) => {
-  const { height, width } = useViewportSize();
-
-  const isMobile = height <= 900 && width <= 500;
+  const isDesktop = useMediaQuery("(min-width: 900px)", false);
 
   const maxGuessAmount = 5;
   if (currentGuessNumber === maxGuessAmount + 1) return null;
@@ -26,7 +24,8 @@ export const Guesses = ({ currentGuessNumber, guesses }: Props) => {
 
     for (let index = 1; index < 6; index++) {
       checkboxes.push(
-        <Grid.Col span={isMobile ? 2 : 1} key={index}>
+        <Grid.Col span={2} key={index}>
+          {isDesktop && <Text color={"dimmed"}>Extrait {index}</Text>}
           <Checkbox
             //@ts-ignore
             icon={displayCorrectIcon(guesses[index])}
@@ -42,7 +41,9 @@ export const Guesses = ({ currentGuessNumber, guesses }: Props) => {
   };
   return (
     <>
-      <Grid justify="center">{displayCheckboxes()}</Grid>{" "}
+      <Grid justify="center" gutter={1}>
+        {displayCheckboxes()}
+      </Grid>{" "}
     </>
   );
 };
