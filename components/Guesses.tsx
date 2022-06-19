@@ -1,4 +1,5 @@
 import { Checkbox, Grid } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
 import React from "react";
 import { QuestionMark, MoodHappy, MoodSad } from "tabler-icons-react";
 
@@ -13,6 +14,10 @@ type Props = {
 };
 
 export const Guesses = ({ currentGuessNumber, guesses }: Props) => {
+  const { height, width } = useViewportSize();
+
+  const isMobile = height <= 900 && width <= 500;
+
   const maxGuessAmount = 5;
   if (currentGuessNumber === maxGuessAmount + 1) return null;
 
@@ -42,7 +47,7 @@ export const Guesses = ({ currentGuessNumber, guesses }: Props) => {
 
     for (let index = 1; index < 6; index++) {
       checkboxes.push(
-        <Grid.Col span={1}>
+        <Grid.Col span={isMobile ? 2 : 1}>
           <Checkbox
             //@ts-ignore
             icon={displayCorrectIcon(guesses[index])}
