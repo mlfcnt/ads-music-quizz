@@ -1,18 +1,18 @@
 import { Autocomplete, Box, Button, Group } from "@mantine/core";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import { useDebounce } from "react-use";
 import { useArtistSugestions } from "../hooks/useArtistSugestions";
 
 type Props = {
   artistToFind: string;
   incrementGuessNumber: () => void;
-  setHasWon: Dispatch<SetStateAction<boolean>>;
+  handleCorrectGuess: () => void;
 };
 
 export const GuessForm = ({
   artistToFind,
   incrementGuessNumber,
-  setHasWon,
+  handleCorrectGuess,
 }: Props) => {
   const [guess, setGuess] = useState("");
   const [debouncedValue, setDebouncedValue] = useState("");
@@ -31,7 +31,7 @@ export const GuessForm = ({
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (guess?.toLowerCase() === artistToFind.toLowerCase()) {
-      setHasWon(true);
+      handleCorrectGuess();
       return;
     }
     setGuess("");

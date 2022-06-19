@@ -19,13 +19,54 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
   const [guessNumber, setGuessNumber] = useState(1);
   const [hasWon, setHasWon] = useState(false);
   const [hasLost, setHasLost] = useState(false);
+  const [guesses, setGuesses] = useState<
+    Record<number, { correct: boolean | null }>
+  >({
+    1: {
+      correct: null,
+    },
+    2: {
+      correct: null,
+    },
+    3: {
+      correct: null,
+    },
+    4: {
+      correct: null,
+    },
+    5: {
+      correct: null,
+    },
+  });
 
   const incrementGuessNumber = (guessNumber: number) => {
     if (guessNumber === 5) {
+      setGuesses({
+        ...guesses,
+        [guessNumber]: {
+          correct: false,
+        },
+      });
       setHasLost(true);
       return;
     }
+    setGuesses({
+      ...guesses,
+      [guessNumber]: {
+        correct: false,
+      },
+    });
     setGuessNumber(guessNumber + 1);
+  };
+
+  const handleCorrectGuess = () => {
+    setGuesses({
+      ...guesses,
+      [guessNumber]: {
+        correct: true,
+      },
+    });
+    setHasWon(true);
   };
   return (
     <>
@@ -42,12 +83,14 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
           <GuessForm
             artistToFind={artistForToday.name}
             incrementGuessNumber={() => incrementGuessNumber(guessNumber)}
-            setHasWon={setHasWon}
+            handleCorrectGuess={handleCorrectGuess}
           />
           <Space h="lg" />
-          <Guesses currentGuessNumber={guessNumber} />
         </>
       )}
+      <Space h="xl" />
+      <Guesses currentGuessNumber={guessNumber} guesses={guesses} />
+      <Space h="xl" />
       {(hasWon || hasLost) && (
         <ShareResults guessNumber={guessNumber} hasLost={hasLost} />
       )}
