@@ -7,7 +7,7 @@ export const CountdownToNextGame = () => {
 
   return (
     <Text size="sm" align="center" color="dimmed">
-      Prochaine partie {timeRemainingToNextArtist} ...
+      Nouvel artiste mystère {timeRemainingToNextArtist} ...
     </Text>
   );
 };
