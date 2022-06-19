@@ -6,38 +6,19 @@ import { GuessForm } from "../components/GuessForm";
 import { useState } from "react";
 import { Guesses } from "../components/Guesses";
 import { ShareResults } from "../components/ShareResults";
+import { ArtistForToday, Guesses as GuessesType } from "../types";
+import { initGuesses } from "./lib";
+import { AfterGameRecap } from "../components/AfterGameRecap";
 
 type Props = {
-  artistForToday: {
-    name: string;
-    id: string;
-    tracks: Track[];
-  };
+  artistForToday: ArtistForToday;
 };
 
 const Home: NextPage<Props> = ({ artistForToday }) => {
   const [guessNumber, setGuessNumber] = useState(1);
   const [hasWon, setHasWon] = useState(false);
   const [hasLost, setHasLost] = useState(false);
-  const [guesses, setGuesses] = useState<
-    Record<number, { correct: boolean | null }>
-  >({
-    1: {
-      correct: null,
-    },
-    2: {
-      correct: null,
-    },
-    3: {
-      correct: null,
-    },
-    4: {
-      correct: null,
-    },
-    5: {
-      correct: null,
-    },
-  });
+  const [guesses, setGuesses] = useState<GuessesType>(initGuesses);
 
   const incrementGuessNumber = (guessNumber: number) => {
     if (guessNumber === 5) {
@@ -95,7 +76,10 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
       )}
 
       {(hasWon || hasLost) && (
-        <ShareResults guessNumber={guessNumber} hasLost={hasLost} />
+        <>
+          <ShareResults guessNumber={guessNumber} hasLost={hasLost} />
+          <AfterGameRecap guesses={guesses} artistForToday={artistForToday} />
+        </>
       )}
     </>
   );
