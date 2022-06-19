@@ -11,7 +11,7 @@ export const useTimeRemainingToNextArtist = () => {
   const [timeRemaining, setTimeRemaining] = useState<string | null>(null);
 
   useInterval(() => {
-    setTimeRemaining(dayjs().endOf("hour").fromNow());
+    setTimeRemaining(dayjs().endOf("day").fromNow());
   }, 1000);
   return timeRemaining;
 };
