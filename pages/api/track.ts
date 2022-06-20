@@ -6,16 +6,34 @@ import {
   Track,
 } from "../../api/spotify";
 import { supabase } from "../../supabaseClient";
+import dayjs from "dayjs";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const getArtistAndTracksOfTheDay = async () => {
   //TODO auth pour pas que nimporte qui puisse refresh..
   const playlist = await getPlaylist();
   const artist = getArtistFromPlaylist(playlist);
-  //TODO ne pas pick un artist si il a deja ete selectionné dans le passé ?
+  if (!artist) return null;
+  // check si l'artiste a deja été tiré le mois précédent
+  const { data: alreadyChosen } = await supabase
+    .from("artist-of-the-day")
+    .select("*")
+    .eq("artistId", artist.id);
+
+  if (alreadyChosen?.length) {
+    const aMonthAgo = dayjs().diff(dayjs().subtract(1, "month"));
+    const lastPicked = dayjs(alreadyChosen?.[0]?.created_at).diff(dayjs());
+    if (lastPicked < aMonthAgo)
+      console.log(
+        `L'artiste ${artist.name} à déjà été séctionné ${dayjs(
+          alreadyChosen?.[0]?.created_at
+        ).fromNow()}... On en met un autre`
+      );
+    getArtistAndTracksOfTheDay();
+    return;
+  }
+
   const topTracks = await getTopTacksFromArtist(artist.id);
+  if (topTracks?.length < 5) return;
 
   //TODO gestion des erreurs
 
@@ -27,19 +45,34 @@ export default async function handler(
     },
   ]);
 
-  console.log(error);
+  return data;
+};
 
-  res.status(200).json(data);
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  let artistAndTracksOfTheDay = [];
+  while (!artistAndTracksOfTheDay.length) {
+    const data = await getArtistAndTracksOfTheDay();
+    data?.length && (artistAndTracksOfTheDay = data);
+  }
+
+  res.status(200).json(artistAndTracksOfTheDay);
 }
 
 const getFiveMostPopoularTracksFromArtist = (topTracks: Track[]) => {
-  let tracks = [];
-  for (let index = 0; index < 5; index++) {
-    tracks.push({
-      name: topTracks[index].name,
-      popularity: topTracks[index].popularity,
-      uri: topTracks[index].uri.split(":")[2],
-    });
+  try {
+    let tracks = [];
+    for (let index = 0; index < 5; index++) {
+      tracks.push({
+        name: topTracks[index].name,
+        popularity: topTracks[index].popularity,
+        uri: topTracks[index].uri.split(":")[2],
+      });
+    }
+    return tracks.sort((a, b) => a.popularity - b.popularity);
+  } catch (error) {
+    console.log("error", { topTracks, error });
   }
-  return tracks.sort((a, b) => a.popularity - b.popularity);
 };

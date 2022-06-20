@@ -78,7 +78,8 @@ export const getPlaylist = async () => {
   return res.json();
 };
 
-export const getArtistFromPlaylist = (playlist: Playlist): Artist => {
+export const getArtistFromPlaylist = (playlist: Playlist): Artist | null => {
+  if (!playlist.tracks) return null;
   const randomTrackIndex = Math.floor(
     Math.random() * playlist.tracks.items.length
   );
