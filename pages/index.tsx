@@ -49,6 +49,13 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
     });
     setHasWon(true);
   };
+
+  console.log(
+    "%cLa réponse est : Michael jackson",
+    "color: white; background: red; font-size: 15px"
+  );
+  console.log("fais confiance...");
+
   return (
     <>
       {!artistForToday.id && <p>Erreur.. pas dartiste... bravo tommy</p>}

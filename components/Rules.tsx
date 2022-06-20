@@ -1,4 +1,4 @@
-import { Button, Center, Modal, Space, Text, Title } from "@mantine/core";
+import { Button, Modal, Space, Text } from "@mantine/core";
 import React, { useState } from "react";
 
 export const Rules = () => {
