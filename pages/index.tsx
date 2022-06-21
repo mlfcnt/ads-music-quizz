@@ -57,11 +57,12 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
         correct: true,
       },
     });
-    showNotification({
-      title: "Bien joué!",
-      message: `${mode === "CLASSIC" && `+ ${6 - guessNumber} points !`}`,
-      icon: <Trophy />,
-    });
+    mode === "CLASSIC" &&
+      showNotification({
+        title: "Bien joué!",
+        message: `+ ${6 - guessNumber} points !`,
+        icon: <Trophy />,
+      });
     setHasWon(true);
   };
   const onModeToggle = async () => {
