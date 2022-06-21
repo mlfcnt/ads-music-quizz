@@ -1,5 +1,5 @@
 import type { GetServerSideProps, NextPage } from "next";
-import { Space, Text } from "@mantine/core";
+import { Notification, Space, Text } from "@mantine/core";
 import { getArtistOfTheDay } from "../api/spotify";
 import { Player } from "../components/Player";
 import { GuessForm } from "../components/GuessForm";
@@ -11,6 +11,8 @@ import { fakeLog, getNewFreeplaySongs, initGuesses, reinitGame } from "../lib";
 import { AfterGameRecap } from "../components/AfterGameRecap";
 import { ModeSelect } from "../components/ModeSelect";
 import { GetNewFreeplayArtistButton } from "../components/GetNewFreeplayArtistButton";
+import { Trophy } from "tabler-icons-react";
+import { showNotification } from "@mantine/notifications";
 
 type Props = {
   artistForToday: ArtistForToday;
@@ -55,6 +57,12 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
         correct: true,
       },
     });
+    showNotification({
+      title: "Bien joué!",
+      // message: `${mode === "CLASSIC" && `+ ${6 - guessNumber} points !`}`,
+      message: `+ ${6 - guessNumber} points !`,
+      icon: <Trophy />,
+    });
     setHasWon(true);
   };
   const onModeToggle = async () => {
@@ -79,6 +87,8 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
 
   const artistToFind =
     mode === "CLASSIC" ? artistForToday.name : freeplayArtist?.name;
+
+  console.log(artistToFind);
 
   return (
     <>

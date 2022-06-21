@@ -5,6 +5,8 @@ import {
   ColorSchemeProvider,
   MantineProvider,
 } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
+
 import { useLocalStorage } from "@mantine/hooks";
 import { Default as MainLayout } from "../layout/Default";
 import "../styles/globals.css";
@@ -41,9 +43,11 @@ export default function App(props: AppProps) {
             colorScheme,
           }}
         >
-          <MainLayout>
-            <Component {...pageProps} />
-          </MainLayout>
+          <NotificationsProvider position="top-left" autoClose={3000}>
+            <MainLayout>
+              <Component {...pageProps} />
+            </MainLayout>
+          </NotificationsProvider>
         </MantineProvider>
       </ColorSchemeProvider>
     </>
