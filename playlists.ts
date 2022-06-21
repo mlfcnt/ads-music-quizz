@@ -11,14 +11,16 @@ export const playlists = [
     id: "4l1CEhc7ZPbaEtiPdCSGbl",
     name: "rap fr 2022",
   },
-  {
-    id: "6Jf4xwIOffHI00KYmV0cmk",
-    name: "bad playlist (tommy)",
-  },
-  {
-    id: "37i9dQZF1DXdfOcg1fm0VG",
-    name: "Video game soundtrack",
-  },
+  //bof
+  // {
+  //   id: "6Jf4xwIOffHI00KYmV0cmk",
+  //   name: "bad playlist (tommy)",
+  // },
+  // trop dur
+  // {
+  //   id: "37i9dQZF1DXdfOcg1fm0VG",
+  //   name: "Video game soundtrack",
+  // },
   // trop dur
   // {
   //   id: "37i9dQZF1DX1tz6EDao8it",
