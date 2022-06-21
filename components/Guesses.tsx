@@ -41,9 +41,7 @@ export const Guesses = ({ currentGuessNumber, guesses }: Props) => {
   };
   return (
     <>
-      <Grid justify="center" gutter={1}>
-        {displayCheckboxes()}
-      </Grid>{" "}
+      <Grid justify="center">{displayCheckboxes()}</Grid>{" "}
     </>
   );
 };

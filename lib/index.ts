@@ -1,4 +1,7 @@
+import { Dispatch, SetStateAction } from "react";
 import { MoodHappy, MoodSad, QuestionMark } from "tabler-icons-react";
+import { fetchFreeModeArtist } from "../api/spotify";
+import { ArtistForToday, Guesses } from "../types";
 
 export const initGuesses = {
   1: {
@@ -38,4 +41,31 @@ export const displayCorrectColor = (guess: any) => {
   if (isCurrent(guess)) return "cyan";
   if (isWrong(guess)) return "red";
   if (isCorrect(guess)) return "green";
+};
+
+export const fakeLog = () => {
+  console.log(
+    "%cLa réponse est : Michael jackson",
+    "color: white; background: red; font-size: 15px"
+  );
+  console.log("fais confiance...");
+};
+
+export const reinitGame = (
+  setGuessNumber: Dispatch<SetStateAction<number>>,
+  setGuesses: Dispatch<SetStateAction<Guesses>>,
+  setHasWon: Dispatch<SetStateAction<boolean>>,
+  setHasLost: Dispatch<SetStateAction<boolean>>
+) => {
+  setGuessNumber(1);
+  setGuesses(initGuesses);
+  setHasWon(false);
+  setHasLost(false);
+};
+
+export const getNewFreeplaySongs = async (
+  setFreeModeArtist: Dispatch<SetStateAction<ArtistForToday | null>>
+) => {
+  const [artist] = await fetchFreeModeArtist();
+  setFreeModeArtist(artist);
 };

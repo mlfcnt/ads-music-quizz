@@ -6,3 +6,5 @@ export type ArtistForToday = {
   id: string;
   tracks: Track[];
 };
+
+export type Mode = "FREE" | "CLASSIC";
