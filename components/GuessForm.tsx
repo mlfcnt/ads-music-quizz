@@ -9,6 +9,7 @@ import { useDebounce } from "react-use";
 import { useArtistSugestions } from "../hooks/useArtistSugestions";
 import { getNewFreeplaySongs, reinitGame } from "../lib";
 import { ArtistForToday, Mode } from "../types";
+import { GetNewFreeplayArtistButton } from "./GetNewFreeplayArtistButton";
 
 type Props = {
   artistToFind: string;
@@ -73,16 +74,12 @@ export const GuessForm = ({
             Envoyer
           </Button>
           {mode === "FREE" && (
-            <Button
-              color="indigo"
-              onClick={() => {
-                reinitGame();
-                setGuess("");
-                getNewFreeplaySongs(setFreeplayArtist);
-              }}
-            >
-              Nouvel artiste
-            </Button>
+            <GetNewFreeplayArtistButton
+              getNewFreeplaySongs={getNewFreeplaySongs}
+              reinitGame={reinitGame}
+              setGuess={setGuess}
+              setFreeplayArtist={setFreeplayArtist}
+            />
           )}
         </Group>
       </form>

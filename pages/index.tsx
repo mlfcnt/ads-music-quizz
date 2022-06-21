@@ -10,6 +10,7 @@ import { ArtistForToday, Guesses as GuessesType, Mode } from "../types";
 import { fakeLog, getNewFreeplaySongs, initGuesses, reinitGame } from "../lib";
 import { AfterGameRecap } from "../components/AfterGameRecap";
 import { ModeSelect } from "../components/ModeSelect";
+import { GetNewFreeplayArtistButton } from "../components/GetNewFreeplayArtistButton";
 
 type Props = {
   artistForToday: ArtistForToday;
@@ -121,6 +122,14 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
               mode === "CLASSIC" ? artistForToday : freeplayArtist
             }
           />
+          {mode === "FREE" && (
+            <GetNewFreeplayArtistButton
+              getNewFreeplaySongs={getNewFreeplaySongs}
+              reinitGame={reinitGame}
+              setGuess={() => {}}
+              setFreeplayArtist={setFreeplayArtist}
+            />
+          )}
         </>
       )}
     </>
