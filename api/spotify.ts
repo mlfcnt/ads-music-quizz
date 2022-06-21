@@ -134,7 +134,7 @@ export const searchArtistsByName = async (name: string) => {
   return artists;
 };
 
-export const fetchFreeModeArtist = async () => {
+export const fetchFreeplayArtist = async () => {
   const res = await fetch("/api/track/freeplay");
   const artistAndTracks = await res.json();
   return artistAndTracks;

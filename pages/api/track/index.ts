@@ -53,8 +53,8 @@ export const getArtistAndTracksOfTheDay = async ({ isFreeplay = false }) => {
   } else {
     return [
       {
-        artistId: artist.id,
-        artistName: artist.name,
+        id: artist.id,
+        name: artist.name,
         tracks: getFiveMostPopoularTracksFromArtist(topTracks),
       },
     ];

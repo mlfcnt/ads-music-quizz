@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { MoodHappy, MoodSad, QuestionMark } from "tabler-icons-react";
-import { fetchFreeModeArtist } from "../api/spotify";
+import { fetchFreeplayArtist } from "../api/spotify";
 import { ArtistForToday, Guesses } from "../types";
 
 export const initGuesses = {
@@ -64,8 +64,8 @@ export const reinitGame = (
 };
 
 export const getNewFreeplaySongs = async (
-  setFreeModeArtist: Dispatch<SetStateAction<ArtistForToday>>
+  setFreeplayArtist: Dispatch<SetStateAction<ArtistForToday>>
 ) => {
-  const [artist] = await fetchFreeModeArtist();
-  setFreeModeArtist(artist);
+  const [artist] = await fetchFreeplayArtist();
+  setFreeplayArtist(artist);
 };

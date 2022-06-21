@@ -1,5 +1,10 @@
 import { Autocomplete, Box, Button, Group } from "@mantine/core";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  SyntheticEvent,
+  useState,
+} from "react";
 import { useDebounce } from "react-use";
 import { useArtistSugestions } from "../hooks/useArtistSugestions";
 import { getNewFreeplaySongs, reinitGame } from "../lib";
@@ -10,7 +15,7 @@ type Props = {
   incrementGuessNumber: () => void;
   handleCorrectGuess: () => void;
   mode: Mode;
-  setFreeModeArtist: Dispatch<SetStateAction<ArtistForToday>>;
+  setFreeplayArtist: Dispatch<SetStateAction<ArtistForToday>>;
   reinitGame: () => void;
 };
 
@@ -19,7 +24,7 @@ export const GuessForm = ({
   incrementGuessNumber,
   handleCorrectGuess,
   mode,
-  setFreeModeArtist,
+  setFreeplayArtist,
   reinitGame,
 }: Props) => {
   const [guess, setGuess] = useState("");
@@ -36,8 +41,12 @@ export const GuessForm = ({
     [guess]
   );
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = (
+    e: SyntheticEvent,
+    artistToFind: ArtistForToday["name"]
+  ) => {
     e.preventDefault();
+    console.log({ artistToFind });
     if (guess?.toLowerCase() === artistToFind.toLowerCase()) {
       handleCorrectGuess();
       return;
@@ -56,7 +65,11 @@ export const GuessForm = ({
           onChange={setGuess}
         />
         <Group mt="md" position="right">
-          <Button type="submit" onClick={handleSubmit} color="orange">
+          <Button
+            type="submit"
+            onClick={(e: SyntheticEvent) => handleSubmit(e, artistToFind)}
+            color="orange"
+          >
             Envoyer
           </Button>
           {mode === "FREE" && (
@@ -65,7 +78,7 @@ export const GuessForm = ({
               onClick={() => {
                 reinitGame();
                 setGuess("");
-                getNewFreeplaySongs(setFreeModeArtist);
+                getNewFreeplaySongs(setFreeplayArtist);
               }}
             >
               Nouvel artiste

@@ -1,5 +1,5 @@
 import type { GetServerSideProps, NextPage } from "next";
-import { Space } from "@mantine/core";
+import { Space, Text } from "@mantine/core";
 import { getArtistOfTheDay } from "../api/spotify";
 import { Player } from "../components/Player";
 import { GuessForm } from "../components/GuessForm";
@@ -21,7 +21,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
   const [hasLost, setHasLost] = useState(false);
   const [guesses, setGuesses] = useState<GuessesType>(initGuesses);
   const [mode, setMode] = useState<Mode>("CLASSIC");
-  const [freeModeArtist, setFreeModeArtist] = useState<ArtistForToday>(
+  const [freeplayArtist, setFreeplayArtist] = useState<ArtistForToday>(
     null as unknown as ArtistForToday
   );
 
@@ -60,7 +60,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
     reinitGame(setGuessNumber, setGuesses, setHasLost, setHasWon);
     if (mode === "CLASSIC") {
       // should be === "FREE" but the state is changed juste underneath
-      getNewFreeplaySongs(setFreeModeArtist);
+      getNewFreeplaySongs(setFreeplayArtist);
     }
     setMode(mode === "CLASSIC" ? "FREE" : "CLASSIC");
   };
@@ -69,9 +69,15 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
     if (mode === "CLASSIC") {
       return artistForToday?.tracks?.[guessNumber - 1]?.uri;
     } else {
-      return freeModeArtist?.tracks?.[guessNumber - 1]?.uri as string;
+      return freeplayArtist?.tracks?.[guessNumber - 1]?.uri as string;
     }
   };
+
+  if (mode === "FREE" && !freeplayArtist?.name)
+    return <Text>Chargement...</Text>;
+
+  const artistToFind =
+    mode === "CLASSIC" ? artistForToday.name : freeplayArtist?.name;
 
   return (
     <>
@@ -93,11 +99,11 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
           <Space h="xl" />
           <Space h="xl" />
           <GuessForm
-            artistToFind={artistForToday.name}
+            artistToFind={artistToFind}
             incrementGuessNumber={() => incrementGuessNumber(guessNumber)}
             handleCorrectGuess={handleCorrectGuess}
             mode={mode}
-            setFreeModeArtist={setFreeModeArtist}
+            setFreeplayArtist={setFreeplayArtist}
             reinitGame={() =>
               reinitGame(setGuessNumber, setGuesses, setHasWon, setHasLost)
             }
@@ -112,7 +118,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
           <AfterGameRecap
             guesses={guesses}
             artistForToday={
-              mode === "CLASSIC" ? artistForToday : freeModeArtist
+              mode === "CLASSIC" ? artistForToday : freeplayArtist
             }
           />
         </>
