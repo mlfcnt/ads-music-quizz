@@ -59,8 +59,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
     });
     showNotification({
       title: "Bien joué!",
-      // message: `${mode === "CLASSIC" && `+ ${6 - guessNumber} points !`}`,
-      message: `+ ${6 - guessNumber} points !`,
+      message: `${mode === "CLASSIC" && `+ ${6 - guessNumber} points !`}`,
       icon: <Trophy />,
     });
     setHasWon(true);
