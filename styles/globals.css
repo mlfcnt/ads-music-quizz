@@ -20,3 +20,7 @@ a {
   transform: scale(1.5);
   position: relative;
 }
+
+.current-guess-checkbox > div > input {
+  border: 3px solid gold !important;
+}

@@ -26,6 +26,7 @@ export const Guesses = ({ currentGuessNumber, guesses }: Props) => {
       checkboxes.push(
         <Grid.Col span={2} key={index}>
           {isDesktop && <Text color={"dimmed"}>Extrait {index}</Text>}
+
           <Checkbox
             //@ts-ignore
             icon={displayCorrectIcon(guesses[index])}
@@ -33,6 +34,9 @@ export const Guesses = ({ currentGuessNumber, guesses }: Props) => {
             onChange={() => {}}
             size="xl"
             color={displayCorrectColor(guesses[index])}
+            className={
+              currentGuessNumber === index ? "current-guess-checkbox" : ""
+            }
           />
         </Grid.Col>
       );
