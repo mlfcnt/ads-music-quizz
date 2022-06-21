@@ -47,7 +47,6 @@ export const GuessForm = ({
     artistToFind: ArtistForToday["name"]
   ) => {
     e.preventDefault();
-    console.log({ artistToFind });
     if (guess?.toLowerCase() === artistToFind.toLowerCase()) {
       handleCorrectGuess();
       return;
