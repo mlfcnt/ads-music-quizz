@@ -125,7 +125,9 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
           {mode === "FREE" && (
             <GetNewFreeplayArtistButton
               getNewFreeplaySongs={getNewFreeplaySongs}
-              reinitGame={reinitGame}
+              reinitGame={() =>
+                reinitGame(setGuessNumber, setGuesses, setHasWon, setHasLost)
+              }
               setGuess={() => {}}
               setFreeplayArtist={setFreeplayArtist}
             />
