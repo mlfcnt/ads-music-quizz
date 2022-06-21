@@ -17,8 +17,6 @@ a {
 
 .frame-spotify {
   clip-path: inset(30px 30px 30px 30px);
-  margin-left: 25rem;
   transform: scale(1.5);
   position: relative;
-  left: -3.5%;
 }
