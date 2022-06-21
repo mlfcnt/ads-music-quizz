@@ -19,8 +19,9 @@ export const playlists = [
     id: "37i9dQZF1DXdfOcg1fm0VG",
     name: "Video game soundtrack",
   },
-  {
-    id: "37i9dQZF1DX1tz6EDao8it",
-    name: "Movie soundtrack",
-  },
+  // trop dur
+  // {
+  //   id: "37i9dQZF1DX1tz6EDao8it",
+  //   name: "Movie soundtrack",
+  // },
 ];
