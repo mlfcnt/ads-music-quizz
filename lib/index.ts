@@ -64,7 +64,7 @@ export const reinitGame = (
 };
 
 export const getNewFreeplaySongs = async (
-  setFreeModeArtist: Dispatch<SetStateAction<ArtistForToday | null>>
+  setFreeModeArtist: Dispatch<SetStateAction<ArtistForToday>>
 ) => {
   const [artist] = await fetchFreeModeArtist();
   setFreeModeArtist(artist);

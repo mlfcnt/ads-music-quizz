@@ -2,7 +2,7 @@ import { Autocomplete, Box, Button, Group } from "@mantine/core";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { useDebounce } from "react-use";
 import { useArtistSugestions } from "../hooks/useArtistSugestions";
-import { getNewFreeplaySongs } from "../lib";
+import { getNewFreeplaySongs, reinitGame } from "../lib";
 import { ArtistForToday, Mode } from "../types";
 
 type Props = {
@@ -10,7 +10,8 @@ type Props = {
   incrementGuessNumber: () => void;
   handleCorrectGuess: () => void;
   mode: Mode;
-  setFreeModeArtist: Dispatch<SetStateAction<ArtistForToday | null>>;
+  setFreeModeArtist: Dispatch<SetStateAction<ArtistForToday>>;
+  reinitGame: () => void;
 };
 
 export const GuessForm = ({
@@ -19,6 +20,7 @@ export const GuessForm = ({
   handleCorrectGuess,
   mode,
   setFreeModeArtist,
+  reinitGame,
 }: Props) => {
   const [guess, setGuess] = useState("");
   const [debouncedValue, setDebouncedValue] = useState("");
@@ -60,7 +62,11 @@ export const GuessForm = ({
           {mode === "FREE" && (
             <Button
               color="indigo"
-              onClick={() => getNewFreeplaySongs(setFreeModeArtist)}
+              onClick={() => {
+                reinitGame();
+                setGuess("");
+                getNewFreeplaySongs(setFreeModeArtist);
+              }}
             >
               Nouvel artiste
             </Button>

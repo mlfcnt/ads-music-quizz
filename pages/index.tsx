@@ -21,8 +21,8 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
   const [hasLost, setHasLost] = useState(false);
   const [guesses, setGuesses] = useState<GuessesType>(initGuesses);
   const [mode, setMode] = useState<Mode>("CLASSIC");
-  const [freeModeArtist, setFreeModeArtist] = useState<ArtistForToday | null>(
-    null
+  const [freeModeArtist, setFreeModeArtist] = useState<ArtistForToday>(
+    null as unknown as ArtistForToday
   );
 
   fakeLog();
@@ -98,6 +98,9 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
             handleCorrectGuess={handleCorrectGuess}
             mode={mode}
             setFreeModeArtist={setFreeModeArtist}
+            reinitGame={() =>
+              reinitGame(setGuessNumber, setGuesses, setHasWon, setHasLost)
+            }
           />
           <Space h="xl" />
         </>
@@ -106,7 +109,12 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
       {(hasWon || hasLost) && (
         <>
           <ShareResults guessNumber={guessNumber} hasLost={hasLost} />
-          <AfterGameRecap guesses={guesses} artistForToday={artistForToday} />
+          <AfterGameRecap
+            guesses={guesses}
+            artistForToday={
+              mode === "CLASSIC" ? artistForToday : freeModeArtist
+            }
+          />
         </>
       )}
     </>
