@@ -63,18 +63,22 @@ export const requestAccessToken = async () => {
   }
 };
 
-export const getPlaylist = async (isFreeplay = false, styles: string[]) => {
+export const getPlaylist = async (isFreeplay = false, styles?: string[]) => {
   const url = "https://api.spotify.com/v1/playlists";
   const accessToken = await requestAccessToken();
   const randomPlaylistId = () => {
     if (isFreeplay) {
-      const filteredByStyles = playlists.filter((x) =>
-        styles.includes(x.style)
-      );
+      if (!styles)
+        return playlists[Math.floor(Math.random() * playlists.length)].id;
+      else {
+        const filteredByStyles = playlists.filter((x) =>
+          styles.includes(x.style)
+        );
 
-      return filteredByStyles[
-        Math.floor(Math.random() * filteredByStyles.length)
-      ].id;
+        return filteredByStyles[
+          Math.floor(Math.random() * filteredByStyles.length)
+        ].id;
+      }
     } else {
       const playlistSuitedForClassicMode = playlists.filter(
         (x) => x.inClassicMode
