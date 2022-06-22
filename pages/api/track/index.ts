@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 
 type Props = {
   isFreeplay: boolean;
-  styles?: string[];
+  styles: string[];
 };
 
 export const getArtistAndTracksOfTheDay = async ({
