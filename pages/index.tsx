@@ -1,5 +1,12 @@
 import type { GetServerSideProps, NextPage } from "next";
-import { Button, Drawer, Group, Space, Text } from "@mantine/core";
+import {
+  Button,
+  Drawer,
+  Group,
+  Space,
+  // Table,
+  Text,
+} from "@mantine/core";
 import { getArtistOfTheDay } from "../api/spotify";
 import { Player } from "../components/Player";
 import { GuessForm } from "../components/GuessForm";
@@ -108,7 +115,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
       <Drawer
         opened={openDrawer}
         onClose={() => setOpenDrawer(false)}
-        title="Customiser la partie"
+        title="Paramètres de jeu"
         padding="xl"
         size="xl"
       >
@@ -131,7 +138,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
           variant="gradient"
           gradient={{ from: "#ed6ea0", to: "#ec8c69", deg: 35 }}
         >
-          Personnaliser la partie
+          Paramètres de jeu
         </Button>
       </Group>
       {songToPlay && <Player trackId={songToPlay()} />}
@@ -178,6 +185,25 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
           )}
         </>
       )}
+      {/* {isClassicMode && (
+        <>
+          <Space h="xl" />
+          <Space h="xl" />
+          <Space h="xl" />
+          <Title>Classement (TODO)</Title>
+          <Table striped highlightOnHover>
+            <thead>
+              <tr>
+                <th>Utilisateur</th>
+                <th>Points (total)</th>
+                <th>Parties (total)</th>
+                <th>Points / partie (moyenne)</th>
+              </tr>
+            </thead>
+            <tbody>{[]}</tbody>
+          </Table>
+        </>
+      )} */}
     </>
   );
 };
