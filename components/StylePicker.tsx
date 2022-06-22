@@ -17,6 +17,9 @@ export const StylePicker = ({ selectedStyle, setSelectedStyle }: Props) => {
       label="Choisissez les styles de musique souhaité"
       value={selectedStyle}
       onChange={setSelectedStyle}
+      searchable
+      nothingFound="Pas de résultats"
+      clearable
     />
   );
 };
