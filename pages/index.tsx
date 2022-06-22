@@ -1,5 +1,5 @@
 import type { GetServerSideProps, NextPage } from "next";
-import { Grid, Space, Text } from "@mantine/core";
+import { Button, Drawer, Grid, Group, Space, Text } from "@mantine/core";
 import { getArtistOfTheDay } from "../api/spotify";
 import { Player } from "../components/Player";
 import { GuessForm } from "../components/GuessForm";
@@ -15,6 +15,7 @@ import { showNotification } from "@mantine/notifications";
 import { StylePicker as StylePicker } from "../components/StylePicker";
 import { playlists } from "../playlists";
 import { GetNewFreeplayArtistButton } from "../components/GetNewFreeplayArtistButton";
+import { useToggle } from "@mantine/hooks";
 
 type Props = {
   artistForToday: ArtistForToday;
@@ -32,6 +33,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
   const [selectedStyles, setSelectedStyles] = useState<string[]>(
     playlists.map((x) => x.style)
   );
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   useEffect(() => {
     if (selectedStyles) {
@@ -104,23 +106,35 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
     <>
       {!artistForToday.id && <p>Erreur.. pas dartiste... bravo tommy</p>}
 
-      <Space h="xl" />
-      <Grid justify="space-between" align={"center"}>
-        <Grid.Col md={3} lg={6}>
-          {isFreeplay && (
+      <Drawer
+        opened={openDrawer}
+        onClose={() => setOpenDrawer(false)}
+        title="Customiser la partie"
+        padding="xl"
+        size="xl"
+      >
+        <Space h="xl" />
+        <ModeSelect mode={mode} onModeToggle={onModeToggle} />
+        {isFreeplay && (
+          <>
+            <Space h="xl" /> <Space h="xl" />
             <StylePicker
               selectedStyle={selectedStyles}
               setSelectedStyle={setSelectedStyles}
             />
-          )}
-        </Grid.Col>
-        <Grid.Col md={3} lg={6}>
-          <ModeSelect mode={mode} onModeToggle={onModeToggle} />
-        </Grid.Col>
-      </Grid>
-      <Space h="xl" />
-      <Space h="xl" />
-      <Space h="xl" />
+          </>
+        )}
+      </Drawer>
+
+      <Group position="right">
+        <Button
+          onClick={() => setOpenDrawer(true)}
+          variant="gradient"
+          gradient={{ from: "#ed6ea0", to: "#ec8c69", deg: 35 }}
+        >
+          Paramètres de la partie
+        </Button>
+      </Group>
       {songToPlay && <Player trackId={songToPlay()} />}
       <Space h="xl" />
       <Space h="xl" />
