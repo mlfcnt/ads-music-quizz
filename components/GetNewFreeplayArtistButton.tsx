@@ -14,7 +14,9 @@ export const GetNewFreeplayArtistButton = ({
 }: Props) => {
   return (
     <Button
-      color="indigo"
+      size="lg"
+      variant="gradient"
+      gradient={{ from: "indigo", to: "cyan" }}
       onClick={() => {
         reinitGame();
         setGuess("");

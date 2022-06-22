@@ -70,12 +70,12 @@ export const GuessForm = ({
             onClick={(e: SyntheticEvent) => handleSubmit(e, artistToFind)}
             size="lg"
             variant="gradient"
-            gradient={{ from: "indigo", to: "cyan" }}
+            gradient={{ from: "teal", to: "lime", deg: 105 }}
           >
             <Group>
               <div>
                 <Text>Envoyer</Text>
-                <Text size="xs" color="gray">
+                <Text size="xs" color="white">
                   ou passer à extrait suivant
                 </Text>
               </div>
