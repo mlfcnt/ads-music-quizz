@@ -29,11 +29,17 @@ export const Guesses = ({ currentGuessNumber, guesses }: Props) => {
 
           <Checkbox
             //@ts-ignore
-            icon={displayCorrectIcon(guesses[index])}
+            icon={displayCorrectIcon(
+              guesses[index],
+              currentGuessNumber === index
+            )}
             checked
             onChange={() => {}}
             size="xl"
-            color={displayCorrectColor(guesses[index])}
+            color={displayCorrectColor(
+              guesses[index],
+              currentGuessNumber === index
+            )}
             className={
               currentGuessNumber === index ? "current-guess-checkbox" : ""
             }

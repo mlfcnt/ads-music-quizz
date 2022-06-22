@@ -1,5 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
-import { MoodHappy, MoodSad, QuestionMark } from "tabler-icons-react";
+import {
+  MoodHappy,
+  MoodSad,
+  PlayerPlay,
+  QuestionMark,
+} from "tabler-icons-react";
 import { fetchFreeplayArtist } from "../api/spotify";
 import { ArtistForToday, Guesses } from "../types";
 
@@ -22,23 +27,28 @@ export const initGuesses = {
 };
 
 const icons = {
-  currentGuess: QuestionMark,
+  currentGuess: PlayerPlay,
+  nextGuess: QuestionMark,
   goodGuess: MoodHappy,
   badGuess: MoodSad,
 };
 
-const isCurrent = (guess: any) => !guess || guess.correct === null;
+const isCurrent = (isCurrentGuess: boolean) => isCurrentGuess;
+const isNext = (guess: any) => !guess || guess.correct === null;
 const isWrong = (guess: any) => guess.correct === false;
 const isCorrect = (guess: any) => guess.correct === true;
 
-export const displayCorrectIcon = (guess: any) => {
-  if (isCurrent(guess)) return icons["currentGuess"];
+export const displayCorrectIcon = (guess: any, isCurrentGuess = false) => {
+  console.log(isCurrentGuess);
+  if (isCurrent(isCurrentGuess)) return icons["currentGuess"];
+  if (isNext(guess)) return icons["nextGuess"];
   if (isWrong(guess)) return icons["badGuess"];
   if (isCorrect(guess)) return icons["goodGuess"];
 };
 
-export const displayCorrectColor = (guess: any) => {
-  if (isCurrent(guess)) return "cyan";
+export const displayCorrectColor = (guess: any, isCurrentGuess = false) => {
+  if (isCurrent(isCurrentGuess)) return "green";
+  if (isNext(guess)) return "cyan";
   if (isWrong(guess)) return "red";
   if (isCorrect(guess)) return "green";
 };

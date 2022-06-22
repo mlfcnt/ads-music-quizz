@@ -88,8 +88,6 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
   const artistToFind =
     mode === "CLASSIC" ? artistForToday.name : freeplayArtist?.name;
 
-  console.log(artistToFind);
-
   return (
     <>
       {!artistForToday.id && <p>Erreur.. pas dartiste... bravo tommy</p>}
