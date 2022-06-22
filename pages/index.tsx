@@ -1,5 +1,5 @@
 import type { GetServerSideProps, NextPage } from "next";
-import { Notification, Space, Text } from "@mantine/core";
+import { Space, Text } from "@mantine/core";
 import { getArtistOfTheDay } from "../api/spotify";
 import { Player } from "../components/Player";
 import { GuessForm } from "../components/GuessForm";
@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Guesses } from "../components/Guesses";
 import { ShareResults } from "../components/ShareResults";
 import { ArtistForToday, Guesses as GuessesType, Mode } from "../types";
-import { fakeLog, getNewFreeplaySongs, initGuesses, reinitGame } from "../lib";
+import { getNewFreeplaySongs, initGuesses, reinitGame } from "../lib";
 import { AfterGameRecap } from "../components/AfterGameRecap";
 import { ModeSelect } from "../components/ModeSelect";
 import { GetNewFreeplayArtistButton } from "../components/GetNewFreeplayArtistButton";
@@ -27,8 +27,6 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
   const [freeplayArtist, setFreeplayArtist] = useState<ArtistForToday>(
     null as unknown as ArtistForToday
   );
-
-  fakeLog();
 
   const incrementGuessNumber = (guessNumber: number) => {
     if (guessNumber === 5) {

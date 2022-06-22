@@ -39,7 +39,6 @@ const isWrong = (guess: any) => guess.correct === false;
 const isCorrect = (guess: any) => guess.correct === true;
 
 export const displayCorrectIcon = (guess: any, isCurrentGuess = false) => {
-  console.log(isCurrentGuess);
   if (isCurrent(isCurrentGuess)) return icons["currentGuess"];
   if (isNext(guess)) return icons["nextGuess"];
   if (isWrong(guess)) return icons["badGuess"];
@@ -51,14 +50,6 @@ export const displayCorrectColor = (guess: any, isCurrentGuess = false) => {
   if (isNext(guess)) return "cyan";
   if (isWrong(guess)) return "red";
   if (isCorrect(guess)) return "green";
-};
-
-export const fakeLog = () => {
-  console.log(
-    "%cLa réponse est : Michael jackson",
-    "color: white; background: red; font-size: 15px"
-  );
-  console.log("fais confiance...");
 };
 
 export const reinitGame = (

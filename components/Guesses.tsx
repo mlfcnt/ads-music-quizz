@@ -26,7 +26,6 @@ export const Guesses = ({ currentGuessNumber, guesses }: Props) => {
       checkboxes.push(
         <Grid.Col span={2} key={index}>
           {isDesktop && <Text color={"dimmed"}>Extrait {index}</Text>}
-
           <Checkbox
             //@ts-ignore
             icon={displayCorrectIcon(
