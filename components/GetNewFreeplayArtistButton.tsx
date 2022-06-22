@@ -17,15 +17,15 @@ export const GetNewFreeplayArtistButton = ({
   return (
     <Button
       size="lg"
-      variant="gradient"
-      gradient={{ from: "indigo", to: "cyan" }}
+      color="gray"
+      uppercase
       onClick={() => {
         reinitGame();
         setGuess("");
         getNewFreeplaySongs(setFreeplayArtist, selectedStyles);
       }}
     >
-      Nouvel artiste
+      Changer d&apos;artiste
     </Button>
   );
 };

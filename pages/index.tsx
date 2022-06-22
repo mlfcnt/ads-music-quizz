@@ -1,5 +1,5 @@
 import type { GetServerSideProps, NextPage } from "next";
-import { Button, Drawer, Grid, Group, Space, Text } from "@mantine/core";
+import { Button, Drawer, Group, Space, Text } from "@mantine/core";
 import { getArtistOfTheDay } from "../api/spotify";
 import { Player } from "../components/Player";
 import { GuessForm } from "../components/GuessForm";
@@ -15,7 +15,6 @@ import { showNotification } from "@mantine/notifications";
 import { StylePicker as StylePicker } from "../components/StylePicker";
 import { playlists } from "../playlists";
 import { GetNewFreeplayArtistButton } from "../components/GetNewFreeplayArtistButton";
-import { useToggle } from "@mantine/hooks";
 
 type Props = {
   artistForToday: ArtistForToday;
@@ -132,7 +131,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
           variant="gradient"
           gradient={{ from: "#ed6ea0", to: "#ec8c69", deg: 35 }}
         >
-          Paramètres de la partie
+          Personnaliser la partie
         </Button>
       </Group>
       {songToPlay && <Player trackId={songToPlay()} />}

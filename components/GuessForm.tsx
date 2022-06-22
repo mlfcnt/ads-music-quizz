@@ -67,12 +67,21 @@ export const GuessForm = ({
           onChange={setGuess}
         />
         <Group mt="md" position="right">
+          {mode === "FREE" && (
+            <GetNewFreeplayArtistButton
+              getNewFreeplaySongs={getNewFreeplaySongs}
+              reinitGame={reinitGame}
+              setGuess={setGuess}
+              setFreeplayArtist={setFreeplayArtist}
+              selectedStyles={selectedStyles}
+            />
+          )}
           <Button
             type="submit"
             onClick={(e: SyntheticEvent) => handleSubmit(e, artistToFind)}
             size="lg"
-            variant="gradient"
-            gradient={{ from: "teal", to: "lime", deg: 105 }}
+            color="green"
+            uppercase
           >
             <Group>
               <div>
@@ -83,15 +92,6 @@ export const GuessForm = ({
               </div>
             </Group>
           </Button>
-          {mode === "FREE" && (
-            <GetNewFreeplayArtistButton
-              getNewFreeplaySongs={getNewFreeplaySongs}
-              reinitGame={reinitGame}
-              setGuess={setGuess}
-              setFreeplayArtist={setFreeplayArtist}
-              selectedStyles={selectedStyles}
-            />
-          )}
         </Group>
       </form>
     </Box>
