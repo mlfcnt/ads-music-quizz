@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, Group } from "@mantine/core";
+import { Autocomplete, Box, Button, Group, Text } from "@mantine/core";
 import React, {
   Dispatch,
   SetStateAction,
@@ -68,9 +68,18 @@ export const GuessForm = ({
           <Button
             type="submit"
             onClick={(e: SyntheticEvent) => handleSubmit(e, artistToFind)}
-            color="orange"
+            size="lg"
+            variant="gradient"
+            gradient={{ from: "indigo", to: "cyan" }}
           >
-            Envoyer
+            <Group>
+              <div>
+                <Text>Envoyer</Text>
+                <Text size="xs" color="gray">
+                  ou passer à extrait suivant
+                </Text>
+              </div>
+            </Group>
           </Button>
           {mode === "FREE" && (
             <GetNewFreeplayArtistButton
