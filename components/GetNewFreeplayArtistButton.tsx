@@ -5,12 +5,14 @@ type Props = {
   setGuess: any;
   getNewFreeplaySongs: any;
   setFreeplayArtist: any;
+  selectedStyles: any;
 };
 export const GetNewFreeplayArtistButton = ({
   reinitGame,
   setGuess,
   getNewFreeplaySongs,
   setFreeplayArtist,
+  selectedStyles,
 }: Props) => {
   return (
     <Button
@@ -20,7 +22,7 @@ export const GetNewFreeplayArtistButton = ({
       onClick={() => {
         reinitGame();
         setGuess("");
-        getNewFreeplaySongs(setFreeplayArtist);
+        getNewFreeplaySongs(setFreeplayArtist, selectedStyles);
       }}
     >
       Nouvel artiste

@@ -1,18 +1,20 @@
 import type { GetServerSideProps, NextPage } from "next";
-import { Space, Text } from "@mantine/core";
+import { Grid, Space, Text } from "@mantine/core";
 import { getArtistOfTheDay } from "../api/spotify";
 import { Player } from "../components/Player";
 import { GuessForm } from "../components/GuessForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Guesses } from "../components/Guesses";
 import { ShareResults } from "../components/ShareResults";
 import { ArtistForToday, Guesses as GuessesType, Mode } from "../types";
 import { getNewFreeplaySongs, initGuesses, reinitGame } from "../lib";
 import { AfterGameRecap } from "../components/AfterGameRecap";
 import { ModeSelect } from "../components/ModeSelect";
-import { GetNewFreeplayArtistButton } from "../components/GetNewFreeplayArtistButton";
 import { Trophy } from "tabler-icons-react";
 import { showNotification } from "@mantine/notifications";
+import { StylePicker as StylePicker } from "../components/StylePicker";
+import { playlists } from "../playlists";
+import { GetNewFreeplayArtistButton } from "../components/GetNewFreeplayArtistButton";
 
 type Props = {
   artistForToday: ArtistForToday;
@@ -27,6 +29,18 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
   const [freeplayArtist, setFreeplayArtist] = useState<ArtistForToday>(
     null as unknown as ArtistForToday
   );
+  const [selectedStyles, setSelectedStyles] = useState<string[]>(
+    playlists.map((x) => x.style)
+  );
+
+  useEffect(() => {
+    if (selectedStyles) {
+      getNewFreeplaySongs(setFreeplayArtist, selectedStyles);
+    }
+  }, [selectedStyles]);
+
+  const isClassicMode = mode === "CLASSIC";
+  const isFreeplay = !isClassicMode;
 
   const incrementGuessNumber = (guessNumber: number) => {
     if (guessNumber === 5) {
@@ -55,7 +69,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
         correct: true,
       },
     });
-    mode === "CLASSIC" &&
+    isClassicMode &&
       showNotification({
         title: "Bien joué !",
         message: `+ ${6 - guessNumber} points !`,
@@ -65,33 +79,45 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
   };
   const onModeToggle = async () => {
     reinitGame(setGuessNumber, setGuesses, setHasLost, setHasWon);
-    if (mode === "CLASSIC") {
+    if (isClassicMode) {
       // should be === "FREE" but the state is changed juste underneath
       getNewFreeplaySongs(setFreeplayArtist);
     }
-    setMode(mode === "CLASSIC" ? "FREE" : "CLASSIC");
+    setMode(isClassicMode ? "FREE" : "CLASSIC");
   };
 
   const songToPlay = () => {
-    if (mode === "CLASSIC") {
+    if (isClassicMode) {
       return artistForToday?.tracks?.[guessNumber - 1]?.uri;
     } else {
       return freeplayArtist?.tracks?.[guessNumber - 1]?.uri as string;
     }
   };
 
-  if (mode === "FREE" && !freeplayArtist?.name)
-    return <Text>Chargement...</Text>;
+  if (isFreeplay && !freeplayArtist?.name) return <Text>Chargement...</Text>;
 
-  const artistToFind =
-    mode === "CLASSIC" ? artistForToday.name : freeplayArtist?.name;
+  const artistToFind = isClassicMode
+    ? artistForToday.name
+    : freeplayArtist?.name;
 
   return (
     <>
       {!artistForToday.id && <p>Erreur.. pas dartiste... bravo tommy</p>}
 
       <Space h="xl" />
-      <ModeSelect mode={mode} onModeToggle={onModeToggle} />
+      <Grid justify="space-between" align={"center"}>
+        <Grid.Col md={3} lg={6}>
+          {isFreeplay && (
+            <StylePicker
+              selectedStyle={selectedStyles}
+              setSelectedStyle={setSelectedStyles}
+            />
+          )}
+        </Grid.Col>
+        <Grid.Col md={3} lg={6}>
+          <ModeSelect mode={mode} onModeToggle={onModeToggle} />
+        </Grid.Col>
+      </Grid>
       <Space h="xl" />
       <Space h="xl" />
       <Space h="xl" />
@@ -114,21 +140,19 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
             reinitGame={() =>
               reinitGame(setGuessNumber, setGuesses, setHasWon, setHasLost)
             }
+            selectedStyles={selectedStyles}
           />
           <Space h="xl" />
         </>
       )}
-
       {(hasWon || hasLost) && (
         <>
           <ShareResults guessNumber={guessNumber} hasLost={hasLost} />
           <AfterGameRecap
             guesses={guesses}
-            artistForToday={
-              mode === "CLASSIC" ? artistForToday : freeplayArtist
-            }
+            artistForToday={isClassicMode ? artistForToday : freeplayArtist}
           />
-          {mode === "FREE" && (
+          {isFreeplay && (
             <GetNewFreeplayArtistButton
               getNewFreeplaySongs={getNewFreeplaySongs}
               reinitGame={() =>
@@ -136,6 +160,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
               }
               setGuess={() => {}}
               setFreeplayArtist={setFreeplayArtist}
+              selectedStyles={selectedStyles}
             />
           )}
         </>

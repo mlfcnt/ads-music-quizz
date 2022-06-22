@@ -6,6 +6,7 @@ import {
   QuestionMark,
 } from "tabler-icons-react";
 import { fetchFreeplayArtist } from "../api/spotify";
+import { playlists } from "../playlists";
 import { ArtistForToday, Guesses } from "../types";
 
 export const initGuesses = {
@@ -65,8 +66,16 @@ export const reinitGame = (
 };
 
 export const getNewFreeplaySongs = async (
-  setFreeplayArtist: Dispatch<SetStateAction<ArtistForToday>>
+  setFreeplayArtist: Dispatch<SetStateAction<ArtistForToday>>,
+  selectedStyles?: string[]
 ) => {
-  const [artist] = await fetchFreeplayArtist();
+  const [artist] = await fetchFreeplayArtist(selectedStyles);
   setFreeplayArtist(artist);
+};
+
+export const mapPlaylistForStylePicker = () => {
+  return playlists.map((x) => ({
+    label: x.style,
+    value: x.style,
+  }));
 };

@@ -18,6 +18,7 @@ type Props = {
   mode: Mode;
   setFreeplayArtist: Dispatch<SetStateAction<ArtistForToday>>;
   reinitGame: () => void;
+  selectedStyles: string[];
 };
 
 export const GuessForm = ({
@@ -27,6 +28,7 @@ export const GuessForm = ({
   mode,
   setFreeplayArtist,
   reinitGame,
+  selectedStyles,
 }: Props) => {
   const [guess, setGuess] = useState("");
   const [debouncedValue, setDebouncedValue] = useState("");
@@ -87,6 +89,7 @@ export const GuessForm = ({
               reinitGame={reinitGame}
               setGuess={setGuess}
               setFreeplayArtist={setFreeplayArtist}
+              selectedStyles={selectedStyles}
             />
           )}
         </Group>

@@ -8,9 +8,17 @@ import {
 import { supabase } from "../../../supabaseClient";
 import dayjs from "dayjs";
 
-export const getArtistAndTracksOfTheDay = async ({ isFreeplay = false }) => {
+type Props = {
+  isFreeplay: boolean;
+  styles?: string[];
+};
+
+export const getArtistAndTracksOfTheDay = async ({
+  isFreeplay = false,
+  styles,
+}: Props) => {
   //TODO auth pour pas que nimporte qui puisse refresh..
-  const playlist = await getPlaylist(isFreeplay);
+  const playlist = await getPlaylist(isFreeplay, styles);
   const artist = getArtistFromPlaylist(playlist);
   if (!artist) return null;
   // check si l'artiste a deja été tiré le mois précédent

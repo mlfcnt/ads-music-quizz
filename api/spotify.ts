@@ -63,12 +63,18 @@ export const requestAccessToken = async () => {
   }
 };
 
-export const getPlaylist = async (isFreeplay = false) => {
+export const getPlaylist = async (isFreeplay = false, styles: string[]) => {
   const url = "https://api.spotify.com/v1/playlists";
   const accessToken = await requestAccessToken();
   const randomPlaylistId = () => {
     if (isFreeplay) {
-      return playlists[Math.floor(Math.random() * playlists.length)].id;
+      const filteredByStyles = playlists.filter((x) =>
+        styles.includes(x.style)
+      );
+
+      return filteredByStyles[
+        Math.floor(Math.random() * filteredByStyles.length)
+      ].id;
     } else {
       const playlistSuitedForClassicMode = playlists.filter(
         (x) => x.inClassicMode
@@ -134,8 +140,11 @@ export const searchArtistsByName = async (name: string) => {
   return artists;
 };
 
-export const fetchFreeplayArtist = async () => {
-  const res = await fetch("/api/track/freeplay");
+export const fetchFreeplayArtist = async (styles?: string[]) => {
+  const res = await fetch("/api/track/freeplay", {
+    method: "POST",
+    body: JSON.stringify(styles),
+  });
   const artistAndTracks = await res.json();
   return artistAndTracks;
 };

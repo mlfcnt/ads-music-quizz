@@ -10,7 +10,7 @@ type Props = {
 export const ModeSelect = ({ mode, onModeToggle }: Props) => {
   const isFreeplay = mode === "FREE";
   return (
-    <>
+    <div>
       <Grid justify="right">
         <Switch
           mr={4}
@@ -33,6 +33,6 @@ export const ModeSelect = ({ mode, onModeToggle }: Props) => {
             : "Un artiste par jour. Les points comptent pour le classement"}
         </Text>
       </Grid>
-    </>
+    </div>
   );
 };
