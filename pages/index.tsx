@@ -36,8 +36,8 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
   const [freeplayArtist, setFreeplayArtist] = useState<ArtistForToday>(
     null as unknown as ArtistForToday
   );
-  const [selectedStyles, setSelectedStyles] = useState<string[]>(
-    playlists.map((x) => x.style)
+  const [selectedStyles, setSelectedStyles] = useState<string[]>(() =>
+    playlists.sort((a, b) => a.style.localeCompare(b.style)).map((x) => x.style)
   );
   const [openDrawer, setOpenDrawer] = useState(false);
 

@@ -74,8 +74,11 @@ export const getNewFreeplaySongs = async (
 };
 
 export const mapPlaylistForStylePicker = () => {
-  return playlists.map((x) => ({
-    label: x.style,
-    value: x.style,
-  }));
+  //sort by name alphabetically
+  return playlists
+    .sort((a, b) => a.style.localeCompare(b.style))
+    .map((x) => ({
+      label: x.style,
+      value: x.style,
+    }));
 };

@@ -35,4 +35,16 @@ export const playlists = [
     inClassicMode: false,
     style: "Movie soundtrack",
   },
+  {
+    id: "37i9dQZF1DXacPj7eARo6k",
+    name: "Années 2000",
+    inClassicMode: true,
+    style: "Années 2000",
+  },
+  {
+    id: "37i9dQZF1DWWl7MndYYxge",
+    name: "Années 80",
+    inClassicMode: true,
+    style: "Années 80",
+  },
 ];
