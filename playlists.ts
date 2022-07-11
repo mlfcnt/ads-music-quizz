@@ -14,7 +14,7 @@ export const playlists = [
   {
     id: "4l1CEhc7ZPbaEtiPdCSGbl",
     name: "rap fr 2022",
-    inClassicMode: true,
+    inClassicMode: false,
     style: "Rap FR 2022",
   },
   {
