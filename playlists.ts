@@ -47,4 +47,28 @@ export const playlists = [
     inClassicMode: true,
     style: "Années 80",
   },
+  {
+    id: "2IamgqJjhiz48fBY9W0kpa",
+    name: "Blind test - 80s / 90s / 00s / 10s / 20s",
+    inClassicMode: true,
+    style: "Tout genre",
+  },
+  {
+    id: "1tLCfsiP8mv5dIsC7YfPyc",
+    name: "Ultime Blind Test (80-2021)",
+    inClassicMode: true,
+    style: "Tout genre",
+  },
+  {
+    id: "37i9dQZEVXbIPWwFssbupI",
+    name: "Top 50 - France",
+    inClassicMode: true,
+    style: "Tout genre",
+  },
+  {
+    id: "37i9dQZEVXbMDoHDwVN2tF",
+    name: "Top 50 - Global",
+    inClassicMode: true,
+    style: "Tout genre",
+  },
 ];
