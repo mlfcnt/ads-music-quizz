@@ -8,7 +8,6 @@ import {
 import { NotificationsProvider } from "@mantine/notifications";
 import { useLocalStorage } from "@mantine/hooks";
 import { Default as MainLayout } from "../layout/Default";
-import { SessionProvider } from "next-auth/react";
 import { LRAuthProvider } from "loginradius-react";
 
 import "../styles/globals.css";
@@ -50,13 +49,11 @@ export default function App(props: AppProps) {
               colorScheme,
             }}
           >
-            <SessionProvider session={pageProps.session}>
-              <NotificationsProvider position="top-left" autoClose={3000}>
-                <MainLayout>
-                  <Component {...pageProps} />
-                </MainLayout>
-              </NotificationsProvider>
-            </SessionProvider>
+            <NotificationsProvider position="top-left" autoClose={3000}>
+              <MainLayout>
+                <Component {...pageProps} />
+              </MainLayout>
+            </NotificationsProvider>
           </MantineProvider>
         </ColorSchemeProvider>
       </LRAuthProvider>
