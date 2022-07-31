@@ -1,6 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import {
   Button,
+  Container,
   Drawer,
   Group,
   Space,
@@ -141,10 +142,12 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
           Paramètres de jeu
         </Button>
       </Group>
-      {songToPlay && <Player trackId={songToPlay()} />}
-      <Space h="xl" />
-      <Space h="xl" />
-      <Guesses currentGuessNumber={guessNumber} guesses={guesses} />
+      <Container>
+        {songToPlay && <Player trackId={songToPlay()} />}
+        <Space h="xl" />
+        <Space h="xl" />
+        <Guesses currentGuessNumber={guessNumber} guesses={guesses} />
+      </Container>
       <Space h="xl" />
       {!hasWon && !hasLost && (
         <>

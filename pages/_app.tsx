@@ -6,9 +6,11 @@ import {
   MantineProvider,
 } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
-
 import { useLocalStorage } from "@mantine/hooks";
 import { Default as MainLayout } from "../layout/Default";
+import { SessionProvider } from "next-auth/react";
+import { LRAuthProvider } from "loginradius-react";
+
 import "../styles/globals.css";
 
 export default function App(props: AppProps) {
@@ -31,25 +33,33 @@ export default function App(props: AppProps) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <ColorSchemeProvider
-        colorScheme={colorScheme}
-        toggleColorScheme={toggleColorScheme}
+      <LRAuthProvider
+        appName="ads-music-quizz"
+        apiKey={process.env.NEXT_PUBLIC_LOGINRADIUS_API_KEY!}
+        redirectUri={"https://ads-music-quizz.vercel.app/"}
       >
-        <MantineProvider
-          withGlobalStyles
-          withNormalizeCSS
-          theme={{
-            /** Put your mantine theme override here */
-            colorScheme,
-          }}
+        <ColorSchemeProvider
+          colorScheme={colorScheme}
+          toggleColorScheme={toggleColorScheme}
         >
-          <NotificationsProvider position="top-left" autoClose={3000}>
-            <MainLayout>
-              <Component {...pageProps} />
-            </MainLayout>
-          </NotificationsProvider>
-        </MantineProvider>
-      </ColorSchemeProvider>
+          <MantineProvider
+            withGlobalStyles
+            withNormalizeCSS
+            theme={{
+              /** Put your mantine theme override here */
+              colorScheme,
+            }}
+          >
+            <SessionProvider session={pageProps.session}>
+              <NotificationsProvider position="top-left" autoClose={3000}>
+                <MainLayout>
+                  <Component {...pageProps} />
+                </MainLayout>
+              </NotificationsProvider>
+            </SessionProvider>
+          </MantineProvider>
+        </ColorSchemeProvider>
+      </LRAuthProvider>
     </>
   );
 }
