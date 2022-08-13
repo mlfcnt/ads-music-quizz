@@ -13,16 +13,7 @@ export const Login = () => {
     content = (
       <>
         <p style={{ marginRight: "10px" }}>Bonjour {user?.FirstName}</p>
-        <Group>
-          <Button onClick={() => logout()}>Déconnexion</Button>
-          <Button
-            onClick={() => logout()}
-            disabled
-            title="Pas encore implémenté :/"
-          >
-            Changer mon nom
-          </Button>
-        </Group>
+        <Button onClick={() => logout()}>Déconnexion</Button>
       </>
     );
   }
