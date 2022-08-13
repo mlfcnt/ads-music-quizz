@@ -1,7 +1,7 @@
 import { useLRAuth } from "loginradius-react";
 import React from "react";
 import { Artist } from "../api/spotify";
-import { saveUserScore } from "../api/user";
+import { saveUserPoints } from "../api/points";
 
 type Props = {
   guessNumber: number;
@@ -27,8 +27,7 @@ export const ShareResults = ({
   }
 
   if (isClassicMode && user) {
-    console.log("HERE");
-    saveUserScore(user.ID, 6 - guessNumber, artistId);
+    saveUserPoints(user.Uid, 6 - guessNumber, artistId);
   }
   return <p>Vous avez trouvé en {guessNumber} essai(s)! Bravo</p>;
 };

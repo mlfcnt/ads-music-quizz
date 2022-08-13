@@ -23,6 +23,7 @@ import { showNotification } from "@mantine/notifications";
 import { StylePicker as StylePicker } from "../components/StylePicker";
 import { playlists } from "../playlists";
 import { GetNewFreeplayArtistButton } from "../components/GetNewFreeplayArtistButton";
+import { Rankings } from "../components/Rankings";
 
 type Props = {
   artistForToday: ArtistForToday;
@@ -195,25 +196,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
           )}
         </>
       )}
-      {/* {isClassicMode && (
-        <>
-          <Space h="xl" />
-          <Space h="xl" />
-          <Space h="xl" />
-          <Title>Classement (TODO)</Title>
-          <Table striped highlightOnHover>
-            <thead>
-              <tr>
-                <th>Utilisateur</th>
-                <th>Points (total)</th>
-                <th>Parties (total)</th>
-                <th>Points / partie (moyenne)</th>
-              </tr>
-            </thead>
-            <tbody>{[]}</tbody>
-          </Table>
-        </>
-      )} */}
+      {isClassicMode && <Rankings />}
     </>
   );
 };
