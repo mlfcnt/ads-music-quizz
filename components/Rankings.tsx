@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { User } from "loginradius-react/build/LRClient";
 import React from "react";
 import { useAllWeekPoints } from "../api/points";
+import { emojiByRanking } from "../lib/misc";
 
 export const Rankings = () => {
   const { weekPoints, users } = useAllWeekPoints();
@@ -24,7 +25,7 @@ export const Rankings = () => {
       <Space h="xl" />
       <Space h="xl" />
       <Space h="xl" />
-      <Title>Classement (early beta = pleins de bugs à prévoir`)</Title>
+      <Title>Classement (early beta = pleins de bugs à prévoir)</Title>
       <Space h="xl" />
       <Space h="xl" />
       <Table striped highlightOnHover>
@@ -34,12 +35,14 @@ export const Rankings = () => {
         <tbody>
           {
             <>
-              {Object.entries(totalPointsPerUsers).map(([userId, points]) => (
-                <tr key={userId}>
-                  <td>{users.find((x) => x.Uid === userId)?.FirstName}</td>
-                  <td>{`${points} point(s)`}</td>
-                </tr>
-              ))}
+              {Object.entries(totalPointsPerUsers)
+                .sort(([_1, points1], [_2, points2]) => points2 - points1)
+                .map(([userId, points], idx) => (
+                  <tr key={userId}>
+                    <td>{users.find((x) => x.Uid === userId)?.FirstName}</td>
+                    <td>{`${points} point(s) ${emojiByRanking(idx + 1)}`}</td>
+                  </tr>
+                ))}
             </>
           }
         </tbody>
@@ -60,13 +63,15 @@ export const Rankings = () => {
                 {/** !TODO ajouter artist name */}
               </thead>
               <tbody>
-                {(values || []).map((value) => (
-                  <tr key={value.userId}>
-                    <td>{value.firstName}</td>
-                    <td>{`${value.amountOfPoints} point(s)`}</td>
-                    <td>TODO</td>
-                  </tr>
-                ))}
+                {(values || [])
+                  .sort((a, b) => b.amountOfPoints - a.amountOfPoints)
+                  .map((value) => (
+                    <tr key={value.userId}>
+                      <td>{value.firstName}</td>
+                      <td>{`${value.amountOfPoints} point(s)`}</td>
+                      <td>TODO</td>
+                    </tr>
+                  ))}
               </tbody>
             </>
           );
