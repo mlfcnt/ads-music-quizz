@@ -1,9 +1,10 @@
-import { Affix, Button } from "@mantine/core";
+import { Affix, Button, Group } from "@mantine/core";
 import React, { ReactNode } from "react";
 import { useLRAuth } from "loginradius-react";
 
 export const Login = () => {
   const { loginWithRedirect, logout, isAuthenticated, user } = useLRAuth();
+
   let content: ReactNode;
 
   if (!isAuthenticated) {
@@ -11,8 +12,17 @@ export const Login = () => {
   } else {
     content = (
       <>
-        <span style={{ marginRight: "10px" }}>Bonjour {user?.FirstName}</span>
-        <Button onClick={() => logout()}>Déconnexion</Button>
+        <p style={{ marginRight: "10px" }}>Bonjour {user?.FirstName}</p>
+        <Group>
+          <Button onClick={() => logout()}>Déconnexion</Button>
+          <Button
+            onClick={() => logout()}
+            disabled
+            title="Pas encore implémenté :/"
+          >
+            Changer mon nom
+          </Button>
+        </Group>
       </>
     );
   }

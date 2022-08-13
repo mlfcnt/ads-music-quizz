@@ -86,6 +86,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
       });
     setHasWon(true);
   };
+
   const onModeToggle = async () => {
     reinitGame(setGuessNumber, setGuesses, setHasLost, setHasWon);
     if (isClassicMode) {
@@ -164,13 +165,19 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
               reinitGame(setGuessNumber, setGuesses, setHasWon, setHasLost)
             }
             selectedStyles={selectedStyles}
+            isFirstGuess={guessNumber === 1}
           />
           <Space h="xl" />
         </>
       )}
       {(hasWon || hasLost) && (
         <>
-          <ShareResults guessNumber={guessNumber} hasLost={hasLost} />
+          <ShareResults
+            guessNumber={guessNumber}
+            hasLost={hasLost}
+            isClassicMode={isClassicMode}
+            artistId={artistForToday.id}
+          />
           <AfterGameRecap
             guesses={guesses}
             artistForToday={isClassicMode ? artistForToday : freeplayArtist}
