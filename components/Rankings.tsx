@@ -24,7 +24,7 @@ export const Rankings = () => {
       <Space h="xl" />
       <Space h="xl" />
       <Space h="xl" />
-      <Title>Classement (beta = sans doutes pleins de bugs)</Title>
+      <Title>Classement (early beta = pleins de bugs à prévoir`)</Title>
       <Space h="xl" />
       <Space h="xl" />
       <Table striped highlightOnHover>
@@ -37,7 +37,7 @@ export const Rankings = () => {
               {Object.entries(totalPointsPerUsers).map(([userId, points]) => (
                 <tr key={userId}>
                   <td>{users.find((x) => x.Uid === userId)?.FirstName}</td>
-                  <td>{`${points} points`}</td>
+                  <td>{`${points} point(s)`}</td>
                 </tr>
               ))}
             </>
@@ -63,7 +63,7 @@ export const Rankings = () => {
                 {(values || []).map((value) => (
                   <tr key={value.userId}>
                     <td>{value.firstName}</td>
-                    <td>{`${value.amountOfPoints} points`}</td>
+                    <td>{`${value.amountOfPoints} point(s)`}</td>
                     <td>TODO</td>
                   </tr>
                 ))}
