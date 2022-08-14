@@ -25,9 +25,7 @@ export const saveUserPoints = async (
     throw new Error("Vous avez déjà joué aujourd'hui 👿");
   }
 
-  const { data, error } = await supabase
-    .from("points")
-    .insert([{ userId, amountOfPoints, artistId }]);
+  await supabase.from("points").insert([{ userId, amountOfPoints, artistId }]);
 };
 
 export type WeekPoints = Record<
@@ -45,9 +43,8 @@ export const useAllWeekPoints = (): {
 } => {
   const [weekPoints, setWeekPoints] = useState<WeekPoints>({});
   const [users, setUsers] = useState<User[]>([]);
-  //TODO only for current week
   const getWeekPoints = async () => {
-    const { data, error } = await supabase.from("points").select("*");
+    const { data } = await supabase.from("points").select("*");
     return data;
   };
   //TODO handle error
@@ -94,7 +91,7 @@ export const useAllWeekPoints = (): {
 };
 
 export const useWeekRankings = () => {
-  const { weekPoints, users } = useAllWeekPoints();
+  const { weekPoints } = useAllWeekPoints();
   const totalPointsPerUsers: Record<User["Uid"], number> = Object.values(
     weekPoints
   )
