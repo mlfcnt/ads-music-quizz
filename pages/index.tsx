@@ -14,10 +14,9 @@ import { StylePicker as StylePicker } from "../components/StylePicker";
 import { playlists } from "../playlists";
 import { GetNewFreeplayArtistButton } from "../components/GetNewFreeplayArtistButton";
 import { Rankings } from "../components/Rankings";
-import { useLRAuth } from "loginradius-react";
-import { useCurrentLeader } from "../api/points";
 import { useToggle } from "react-use";
 import { LeaderAlert } from "../components/LeaderAlert";
+import { useCurrentUserIsLeader } from "../hooks/useCurrentUserIsLeader";
 
 type Props = {
   artistForToday: ArtistForToday;
@@ -36,18 +35,15 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
     playlists.sort((a, b) => a.style.localeCompare(b.style)).map((x) => x.style)
   );
   const [openDrawer, setOpenDrawer] = useState(false);
-  const { user } = useLRAuth();
-  const currentLeaderId = useCurrentLeader();
+  const currentUserIsLeader = useCurrentUserIsLeader();
 
   const [showLeaderModal, toggleLeaderModal] = useToggle(false);
 
   useEffect(() => {
-    if (!user || !currentLeaderId) return;
-    console.log({ me: user.Uid, currentLeaderId });
-    if (user.Uid === currentLeaderId) {
+    if (currentUserIsLeader) {
       toggleLeaderModal();
     }
-  }, [user, currentLeaderId, toggleLeaderModal]);
+  }, [currentUserIsLeader, toggleLeaderModal]);
 
   useEffect(() => {
     if (selectedStyles) {
