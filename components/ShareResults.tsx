@@ -5,6 +5,7 @@ import { saveUserPoints } from "../api/points";
 import { useRouter } from "next/router";
 import { showNotification } from "@mantine/notifications";
 import { User } from "loginradius-react/build/LRClient";
+import { Trophy } from "tabler-icons-react";
 
 type Props = {
   guessNumber: number;
@@ -34,6 +35,11 @@ export const ShareResults = ({
   const handleSave = async (user: User) => {
     try {
       await saveUserPoints(user.Uid, 6 - guessNumber, artistId);
+      showNotification({
+        title: "Bien joué !",
+        message: `+ ${6 - guessNumber} points !`,
+        icon: <Trophy />,
+      });
       <p>Vous avez trouvé en {guessNumber} essai(s)! Bravo</p>;
       router.reload();
     } catch (error: any) {
