@@ -75,7 +75,7 @@ export const Rankings = () => {
                     <tr key={idx}>
                       <td>{value.firstName}</td>
                       <td>{`${value.amountOfPoints} point(s)`}</td>
-                      <td>TODO</td>
+                      <td>Pas encore implémenté</td>
                     </tr>
                   ))}
               </tbody>
