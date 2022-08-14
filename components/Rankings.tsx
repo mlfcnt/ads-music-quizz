@@ -20,12 +20,14 @@ export const Rankings = () => {
       return acc;
     }, {});
 
+  const noResultsYet = !Object.values(weekPoints)?.length;
+
   return (
     <>
       <Space h="xl" />
       <Space h="xl" />
       <Space h="xl" />
-      <Title>Classement (early beta = pleins de bugs à prévoir)</Title>
+      <Title>Classement (early beta = bugs à prévoir)</Title>
       <Space h="xl" />
       <Space h="xl" />
       <Table striped highlightOnHover>
@@ -33,17 +35,21 @@ export const Rankings = () => {
           <th style={{ fontWeight: "bold", color: "gold" }}>De la semaine</th>
         </thead>
         <tbody>
+          {noResultsYet && <p>Pas encore de résultats</p>}
+
           {
-            <>
+            <div>
               {Object.entries(totalPointsPerUsers)
                 .sort(([_1, points1], [_2, points2]) => points2 - points1)
-                .map(([userId, points], idx) => (
-                  <tr key={userId}>
-                    <td>{users.find((x) => x.Uid === userId)?.FirstName}</td>
-                    <td>{`${points} point(s) ${emojiByRanking(idx + 1)}`}</td>
-                  </tr>
-                ))}
-            </>
+                .map(([userId, points], idx) => {
+                  return (
+                    <tr key={userId}>
+                      <td>{users.find((x) => x.Uid === userId)?.FirstName}</td>
+                      <td>{`${points} point(s) ${emojiByRanking(idx + 1)}`}</td>
+                    </tr>
+                  );
+                })}
+            </div>
           }
         </tbody>
         <Space h="xl" />
@@ -66,7 +72,7 @@ export const Rankings = () => {
                 {(values || [])
                   .sort((a, b) => b.amountOfPoints - a.amountOfPoints)
                   .map((value) => (
-                    <tr key={value.userId}>
+                    <tr key={idx}>
                       <td>{value.firstName}</td>
                       <td>{`${value.amountOfPoints} point(s)`}</td>
                       <td>TODO</td>

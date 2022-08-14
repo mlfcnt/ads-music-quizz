@@ -58,7 +58,6 @@ export const requestAccessToken = async () => {
     }
     return accessToken;
   } catch (error) {
-    console.log(1, error);
     throw error;
   }
 };

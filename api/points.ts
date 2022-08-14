@@ -5,16 +5,29 @@ import { Artist } from "./spotify";
 import { groupBy } from "lodash";
 import dayjs from "dayjs";
 
+export const playerAlreadySubmitted = async (userId: User["Uid"]) => {
+  const { data, error } = await supabase
+    .from("points")
+    .select("*")
+    .eq("userId", userId)
+    .gte("created_at", dayjs().startOf("day").toISOString());
+
+  return !!data?.length;
+};
+
 export const saveUserPoints = async (
   userId: User["Uid"],
   amountOfPoints: number,
   artistId: Artist["id"]
 ) => {
+  const hasAlreadyPlayed = await playerAlreadySubmitted(userId);
+  if (hasAlreadyPlayed) {
+    throw new Error("Vous avez déjà joué aujourd'hui 👿");
+  }
+
   const { data, error } = await supabase
     .from("points")
     .insert([{ userId, amountOfPoints, artistId }]);
-
-  console.log({ data, error });
 };
 
 export type WeekPoints = Record<
@@ -71,8 +84,6 @@ export const useAllWeekPoints = (): {
         const grouppedByDate = groupBy(filterForWeek, (d) =>
           dayjs(d.created_at).startOf("day")
         );
-
-        console.log([grouppedByDate]);
 
         setWeekPoints(grouppedByDate);
       });
