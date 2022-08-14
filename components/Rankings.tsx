@@ -1,24 +1,12 @@
 import { Space, Table, Title } from "@mantine/core";
 import dayjs from "dayjs";
-import { User } from "loginradius-react/build/LRClient";
 import React from "react";
-import { useAllWeekPoints } from "../api/points";
+import { useAllWeekPoints, useWeekRankings } from "../api/points";
 import { emojiByRanking } from "../lib/misc";
 
 export const Rankings = () => {
   const { weekPoints, users } = useAllWeekPoints();
-
-  const totalPointsPerUsers: Record<User["Uid"], number> = Object.values(
-    weekPoints
-  )
-    .flatMap((x) => x)
-    .reduce<Record<User["Uid"], number>>((acc, curr) => {
-      if (!acc[curr.userId]) {
-        acc[curr.userId] = 0;
-      }
-      acc[curr.userId] += curr.amountOfPoints;
-      return acc;
-    }, {});
+  const weeklyRankings = useWeekRankings();
 
   const noResultsYet = !Object.values(weekPoints)?.length;
 
@@ -39,16 +27,14 @@ export const Rankings = () => {
 
           {
             <div>
-              {Object.entries(totalPointsPerUsers)
-                .sort(([_1, points1], [_2, points2]) => points2 - points1)
-                .map(([userId, points], idx) => {
-                  return (
-                    <tr key={userId}>
-                      <td>{users.find((x) => x.Uid === userId)?.FirstName}</td>
-                      <td>{`${points} point(s) ${emojiByRanking(idx + 1)}`}</td>
-                    </tr>
-                  );
-                })}
+              {weeklyRankings.map(([userId, points], idx) => {
+                return (
+                  <tr key={userId}>
+                    <td>{users.find((x) => x.Uid === userId)?.FirstName}</td>
+                    <td>{`${points} point(s) ${emojiByRanking(idx + 1)}`}</td>
+                  </tr>
+                );
+              })}
             </div>
           }
         </tbody>

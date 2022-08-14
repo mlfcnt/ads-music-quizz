@@ -92,3 +92,26 @@ export const useAllWeekPoints = (): {
 
   return { weekPoints, users };
 };
+
+export const useWeekRankings = () => {
+  const { weekPoints, users } = useAllWeekPoints();
+  const totalPointsPerUsers: Record<User["Uid"], number> = Object.values(
+    weekPoints
+  )
+    .flatMap((x) => x)
+    .reduce<Record<User["Uid"], number>>((acc, curr) => {
+      if (!acc[curr.userId]) {
+        acc[curr.userId] = 0;
+      }
+      acc[curr.userId] += curr.amountOfPoints;
+      return acc;
+    }, {});
+  return Object.entries(totalPointsPerUsers).sort(
+    ([_1, points1], [_2, points2]) => points2 - points1
+  );
+};
+
+export const useCurrentLeader = (): User["Uid"] | null => {
+  const weeklyRankings = useWeekRankings();
+  return weeklyRankings?.[0]?.[0];
+};
