@@ -5,7 +5,6 @@ import { Player } from "../components/Player";
 import { GuessForm } from "../components/GuessForm";
 import { useEffect, useState } from "react";
 import { Guesses } from "../components/Guesses";
-import { ShareResults } from "../components/ShareResults";
 import { ArtistForToday, Guesses as GuessesType, Mode } from "../types";
 import { getNewFreeplaySongs, initGuesses, reinitGame } from "../lib";
 import { AfterGameRecap } from "../components/AfterGameRecap";
@@ -17,6 +16,7 @@ import { Rankings } from "../components/Rankings";
 import { useToggle } from "react-use";
 import { LeaderAlert } from "../components/LeaderAlert";
 import { useCurrentUserIsLeader } from "../hooks/useCurrentUserIsLeader";
+import { useUpdateScore } from "../hooks/useUpdateScore";
 
 type Props = {
   artistForToday: ArtistForToday;
@@ -24,8 +24,8 @@ type Props = {
 
 const Home: NextPage<Props> = ({ artistForToday }) => {
   const [guessNumber, setGuessNumber] = useState(1);
-  const [hasWon, setHasWon] = useState(false);
-  const [hasLost, setHasLost] = useState(false);
+  const [hasWon, setHasWon] = useState<boolean | null>(null);
+  const [hasLost, setHasLost] = useState<boolean | null>(null);
   const [guesses, setGuesses] = useState<GuessesType>(initGuesses);
   const [mode, setMode] = useState<Mode>("CLASSIC");
   const [freeplayArtist, setFreeplayArtist] = useState<ArtistForToday>(
@@ -53,6 +53,14 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
 
   const isClassicMode = mode === "CLASSIC";
   const isFreeplay = !isClassicMode;
+
+  useUpdateScore({
+    hasWon,
+    hasLost,
+    guessNumber,
+    isClassicMode,
+    artistId: artistForToday.id,
+  });
 
   const incrementGuessNumber = (guessNumber: number) => {
     if (guessNumber === 5) {
@@ -167,12 +175,11 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
       )}
       {(hasWon || hasLost) && (
         <>
-          <ShareResults
-            guessNumber={guessNumber}
-            hasLost={hasLost}
-            isClassicMode={isClassicMode}
-            artistId={artistForToday.id}
-          />
+          {hasLost ? (
+            <p>Dommage 😟. Retente ta chance demain !</p>
+          ) : (
+            <p>Vous avez trouvé en {guessNumber} essai(s)! Bravo</p>
+          )}
           <AfterGameRecap
             guesses={guesses}
             artistForToday={isClassicMode ? artistForToday : freeplayArtist}

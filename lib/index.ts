@@ -56,8 +56,8 @@ export const displayCorrectColor = (guess: any, isCurrentGuess = false) => {
 export const reinitGame = (
   setGuessNumber: Dispatch<SetStateAction<number>>,
   setGuesses: Dispatch<SetStateAction<Guesses>>,
-  setHasWon: Dispatch<SetStateAction<boolean>>,
-  setHasLost: Dispatch<SetStateAction<boolean>>
+  setHasWon: Dispatch<SetStateAction<boolean | null>>,
+  setHasLost: Dispatch<SetStateAction<boolean | null>>
 ) => {
   setGuessNumber(1);
   setGuesses(initGuesses);
