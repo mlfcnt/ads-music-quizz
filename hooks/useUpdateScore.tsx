@@ -11,6 +11,8 @@ type Props = {
   isClassicMode: boolean;
   guessNumber: number;
   artistId: string;
+  toggleReactionModale: () => void;
+  reaction: string | null;
 };
 
 export const useUpdateScore = ({
@@ -19,6 +21,8 @@ export const useUpdateScore = ({
   isClassicMode,
   guessNumber,
   artistId,
+  reaction,
+  toggleReactionModale,
 }: Props) => {
   const { user } = useLRAuth();
   const router = useRouter();
@@ -29,7 +33,8 @@ export const useUpdateScore = ({
       try {
         if (!user?.Uid || !isClassicMode) return;
         const pointsToSave = isVictory ? 6 - guessNumber : 0;
-        await saveUserPoints(user.Uid, pointsToSave, artistId);
+        toggleReactionModale();
+        await saveUserPoints(user.Uid, pointsToSave, artistId, reaction);
 
         if (isVictory) {
           showNotification({
@@ -37,8 +42,8 @@ export const useUpdateScore = ({
             message: `+ ${pointsToSave} points !`,
             icon: <Trophy />,
           });
-          router.reload();
         }
+        router.reload();
       } catch (error: any) {
         showNotification({
           title: "Bien tenté..",
@@ -46,7 +51,15 @@ export const useUpdateScore = ({
         });
       }
     },
-    [artistId, guessNumber, isClassicMode, router, user]
+    [
+      artistId,
+      guessNumber,
+      isClassicMode,
+      reaction,
+      router,
+      toggleReactionModale,
+      user?.Uid,
+    ]
   );
 
   useEffect(() => {

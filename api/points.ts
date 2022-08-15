@@ -19,7 +19,7 @@ export const saveUserPoints = async (
   userId: User["Uid"],
   amountOfPoints: number,
   artistId: Artist["id"],
-  reaction?: string
+  reaction: string | null
 ) => {
   const hasAlreadyPlayed = await playerAlreadySubmitted(userId);
   if (hasAlreadyPlayed) {

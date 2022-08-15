@@ -17,6 +17,7 @@ import { useToggle } from "react-use";
 import { LeaderAlert } from "../components/LeaderAlert";
 import { useCurrentUserIsLeader } from "../hooks/useCurrentUserIsLeader";
 import { useUpdateScore } from "../hooks/useUpdateScore";
+import { ReactionModal } from "../components/ReactionModal";
 
 type Props = {
   artistForToday: ArtistForToday;
@@ -38,6 +39,8 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
   const currentUserIsLeader = useCurrentUserIsLeader();
 
   const [showLeaderModal, toggleLeaderModal] = useToggle(false);
+  const [showReactionModal, setShowReactionModal] = useState<boolean>(false);
+  const [reaction, setReaction] = useState<string | null>(null);
 
   useEffect(() => {
     if (currentUserIsLeader) {
@@ -60,6 +63,8 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
     guessNumber,
     isClassicMode,
     artistId: artistForToday.id,
+    toggleReactionModale: () => setShowReactionModal(true),
+    reaction,
   });
 
   const incrementGuessNumber = (guessNumber: number) => {
@@ -199,6 +204,11 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
       )}
       {isClassicMode && <Rankings />}
       <LeaderAlert show={showLeaderModal} toggle={toggleLeaderModal} />
+      <ReactionModal
+        show={showReactionModal}
+        toggle={() => setShowReactionModal(false)}
+        setReaction={setReaction}
+      />
     </>
   );
 };
