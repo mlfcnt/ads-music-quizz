@@ -18,14 +18,17 @@ export const playerAlreadySubmitted = async (userId: User["Uid"]) => {
 export const saveUserPoints = async (
   userId: User["Uid"],
   amountOfPoints: number,
-  artistId: Artist["id"]
+  artistId: Artist["id"],
+  reaction?: string
 ) => {
   const hasAlreadyPlayed = await playerAlreadySubmitted(userId);
   if (hasAlreadyPlayed) {
     throw new Error("Vous avez déjà joué aujourd'hui 👿");
   }
 
-  await supabase.from("points").insert([{ userId, amountOfPoints, artistId }]);
+  await supabase
+    .from("points")
+    .insert([{ userId, amountOfPoints, artistId, reaction }]);
 };
 
 export type WeekPoints = Record<
@@ -114,5 +117,9 @@ export const useWeekRankings = () => {
 
 export const useCurrentLeader = (): User["Uid"] | null => {
   const weeklyRankings = useWeekRankings();
-  return weeklyRankings?.[0]?.[0];
+  const maxScoreIs0 = weeklyRankings?.[0]?.[1] === 0;
+  if (maxScoreIs0) return null;
+
+  const leaderId = weeklyRankings?.[0]?.[0];
+  return leaderId;
 };
