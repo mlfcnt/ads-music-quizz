@@ -198,6 +198,9 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
         </>
       )}
       {isClassicMode && <Rankings />}
+      <Space h={"xl"} />
+      <Space h={"xl"} />
+      <Space h={"xl"} />
       <LeaderAlert show={showLeaderModal} toggle={toggleLeaderModal} />
     </>
   );
