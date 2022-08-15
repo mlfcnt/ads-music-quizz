@@ -19,6 +19,7 @@ export const saveUserPoints = async (
   userId: User["Uid"],
   amountOfPoints: number,
   artistId: Artist["id"],
+  artistName: Artist["name"],
   reaction?: string
 ) => {
   const hasAlreadyPlayed = await playerAlreadySubmitted(userId);
@@ -28,7 +29,7 @@ export const saveUserPoints = async (
 
   await supabase
     .from("points")
-    .insert([{ userId, amountOfPoints, artistId, reaction }]);
+    .insert([{ userId, amountOfPoints, artistId, artistName, reaction }]);
 };
 
 export type WeekPoints = Record<
@@ -38,6 +39,7 @@ export type WeekPoints = Record<
     userId: User["Uid"];
     amountOfPoints: number;
     artistId: Artist["id"];
+    artistName: Artist["name"];
   }[]
 >;
 export const useAllWeekPoints = (): {

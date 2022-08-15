@@ -59,7 +59,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
     hasLost,
     guessNumber,
     isClassicMode,
-    artistId: artistForToday.id,
+    artist: artistForToday,
   });
 
   const incrementGuessNumber = (guessNumber: number) => {

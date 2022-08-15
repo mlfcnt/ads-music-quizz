@@ -4,13 +4,14 @@ import { useRouter } from "next/router";
 import React, { useCallback, useEffect } from "react";
 import { Trophy } from "tabler-icons-react";
 import { saveUserPoints } from "../api/points";
+import { Artist } from "../api/spotify";
 
 type Props = {
   hasWon: boolean | null;
   hasLost: boolean | null;
   isClassicMode: boolean;
   guessNumber: number;
-  artistId: string;
+  artist: Artist;
 };
 
 export const useUpdateScore = ({
@@ -18,7 +19,7 @@ export const useUpdateScore = ({
   hasLost,
   isClassicMode,
   guessNumber,
-  artistId,
+  artist,
 }: Props) => {
   const { user } = useLRAuth();
   const router = useRouter();
@@ -29,7 +30,7 @@ export const useUpdateScore = ({
       try {
         if (!user?.Uid || !isClassicMode) return;
         const pointsToSave = isVictory ? 6 - guessNumber : 0;
-        await saveUserPoints(user.Uid, pointsToSave, artistId);
+        await saveUserPoints(user.Uid, pointsToSave, artist.id, artist.name);
 
         if (isVictory) {
           showNotification({
@@ -46,7 +47,7 @@ export const useUpdateScore = ({
         });
       }
     },
-    [artistId, guessNumber, isClassicMode, router, user]
+    [artist.id, artist.name, guessNumber, isClassicMode, router, user?.Uid]
   );
 
   useEffect(() => {
@@ -57,14 +58,5 @@ export const useUpdateScore = ({
     }
     savePoints("LOST");
     return;
-  }, [
-    hasWon,
-    hasLost,
-    isClassicMode,
-    user,
-    guessNumber,
-    router,
-    artistId,
-    savePoints,
-  ]);
+  }, [hasWon, hasLost, isClassicMode, user, guessNumber, router, savePoints]);
 };

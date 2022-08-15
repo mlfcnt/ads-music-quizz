@@ -2,6 +2,7 @@ import { Space, Table, Title } from "@mantine/core";
 import dayjs from "dayjs";
 import React from "react";
 import { useAllWeekPoints, useWeekRankings } from "../api/points";
+import { Artist } from "../api/spotify";
 import { emojiByRanking } from "../lib/misc";
 
 export const Rankings = () => {
@@ -9,6 +10,13 @@ export const Rankings = () => {
   const weeklyRankings = useWeekRankings();
 
   const noResultsYet = !Object.values(weekPoints)?.length;
+
+  const displayArtist = (date: string, artistName: Artist["name"]) => {
+    if (dayjs(date).isSame(dayjs(), "day")) {
+      return "mystère...";
+    }
+    return artistName;
+  };
 
   return (
     <>
@@ -51,8 +59,10 @@ export const Rankings = () => {
           return (
             <>
               <thead>
-                <th key={idx}>{dayjs(day).format("dddd")}</th>
-                {/** !TODO ajouter artist name */}
+                <th key={idx}>{`${dayjs(day).format("dddd")} - ${displayArtist(
+                  day,
+                  values?.[0]?.artistName
+                )}`}</th>
               </thead>
               <tbody>
                 {(values || [])
@@ -61,7 +71,7 @@ export const Rankings = () => {
                     <tr key={idx}>
                       <td>{value.firstName}</td>
                       <td>{`${value.amountOfPoints} point(s)`}</td>
-                      <td>Pas encore implémenté</td>
+                      <td>Avis sur l&apos;artiste : Pas encore implémenté</td>
                     </tr>
                   ))}
               </tbody>
