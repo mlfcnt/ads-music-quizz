@@ -74,9 +74,13 @@ export const useAllWeekPoints = (): {
           firstName: users.find((user) => user.Uid === x.userId)?.FirstName,
         }));
 
-        const filterForWeek = dataWithUsernames.filter((x) =>
-          dayjs(x.createdAt).isBefore(dayjs().endOf("week"))
-        );
+        const filterForWeek = dataWithUsernames.filter((x) => {
+          return (
+            dayjs(x.createdAt).isBefore(
+              dayjs().endOf("week").subtract(2, "day")
+            ) && dayjs().startOf("week").isBefore(dayjs(x.created_at))
+          );
+        });
 
         const grouppedByDate = groupBy(filterForWeek, (d) =>
           dayjs(d.created_at).startOf("day")
