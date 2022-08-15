@@ -23,13 +23,13 @@ export const Rankings = () => {
       <Space h="xl" />
       <Space h="xl" />
       <Space h="xl" />
-      <Title>Classement (beta = bugs à prévoir)</Title>
+      <Title>Classement (beta = bugs à prévoir 🐛)</Title>
       <Space h="xl" />
       <Space h="xl" />
       <Table striped>
         <thead>
           <th style={{ fontWeight: "bold", color: "gold" }}>
-            Cummulé (semaine)
+            Cummulé (semaine en cours)
           </th>
         </thead>
         <thead>
