@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { showNotification } from "@mantine/notifications";
 import { useLRAuth } from "loginradius-react";
 import { useRouter } from "next/router";
@@ -11,8 +12,6 @@ type Props = {
   isClassicMode: boolean;
   guessNumber: number;
   artistId: string;
-  toggleReactionModale: () => void;
-  reaction: string | null;
 };
 
 export const useUpdateScore = ({
@@ -21,8 +20,6 @@ export const useUpdateScore = ({
   isClassicMode,
   guessNumber,
   artistId,
-  reaction,
-  toggleReactionModale,
 }: Props) => {
   const { user } = useLRAuth();
   const router = useRouter();
@@ -33,8 +30,10 @@ export const useUpdateScore = ({
       try {
         if (!user?.Uid || !isClassicMode) return;
         const pointsToSave = isVictory ? 6 - guessNumber : 0;
-        toggleReactionModale();
-        await saveUserPoints(user.Uid, pointsToSave, artistId, reaction);
+        // toggleReactionModale();
+        const test = window.confirm();
+        const truc = test ? "🙏" : "🥱";
+        await saveUserPoints(user.Uid, pointsToSave, artistId, truc);
 
         if (isVictory) {
           showNotification({
@@ -51,15 +50,7 @@ export const useUpdateScore = ({
         });
       }
     },
-    [
-      artistId,
-      guessNumber,
-      isClassicMode,
-      reaction,
-      router,
-      toggleReactionModale,
-      user?.Uid,
-    ]
+    [artistId, guessNumber, isClassicMode, router, user?.Uid]
   );
 
   useEffect(() => {
