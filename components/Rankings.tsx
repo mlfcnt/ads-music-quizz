@@ -15,7 +15,7 @@ export const Rankings = () => {
       <Space h="xl" />
       <Space h="xl" />
       <Space h="xl" />
-      <Title>Classement (early beta = bugs à prévoir)</Title>
+      <Title>Classement (beta = bugs à prévoir)</Title>
       <Space h="xl" />
       <Space h="xl" />
       <Table striped highlightOnHover>
