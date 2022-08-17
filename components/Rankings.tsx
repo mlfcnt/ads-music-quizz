@@ -9,11 +9,15 @@ export const Rankings = () => {
   const { weekPoints, users } = useAllWeekPoints();
   const weeklyRankings = useWeekRankings();
 
+  console.log(weekPoints);
+
+  const isLoading = !weekPoints;
+
   const noResultsYet = !Object.values(weekPoints)?.length;
 
   const displayArtist = (date: string, artistName: Artist["name"]) => {
     if (dayjs(date).isSame(dayjs(), "day")) {
-      return "mystère...";
+      return "";
     }
     return artistName;
   };
@@ -38,6 +42,7 @@ export const Rankings = () => {
         </thead>
         <Space h={"md"} />
         <tbody>
+          {isLoading && <p>Chargement...</p>}
           {noResultsYet && <p>Pas encore de résultats</p>}
 
           {weeklyRankings.map(([userId, points], idx) => {
@@ -64,8 +69,9 @@ export const Rankings = () => {
           <th align="left">Avis sur l&apos;artiste (pas encore implémenté)</th>
         </thead>
         {Object.entries(weekPoints)
-          .sort(([day1], [day2]) => dayjs(day1).unix() - dayjs(day2).unix())
+          .sort(([day1], [day2]) => dayjs(day2).unix() - dayjs(day1).unix())
           .map(([day, values], idx) => {
+            const isToday = dayjs(day).isSame(dayjs(), "day");
             return (
               <>
                 <Space h={"md"} />
@@ -73,10 +79,11 @@ export const Rankings = () => {
                   <th key={idx} align="left">
                     {
                       <strong>
-                        {`📆 ${dayjs(day).format("dddd")} - ${displayArtist(
-                          day,
-                          values?.[0]?.artistName
-                        )}`}{" "}
+                        {`📆 ${
+                          isToday
+                            ? "Aujourd'hui"
+                            : `${dayjs(day).format("dddd")} -`
+                        } ${displayArtist(day, values?.[0]?.artistName)}`}{" "}
                       </strong>
                     }
                     <Space h={"md"} />
