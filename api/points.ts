@@ -40,6 +40,7 @@ export type WeekPoints = Record<
     amountOfPoints: number;
     artistId: Artist["id"];
     artistName: Artist["name"];
+    reaction?: string;
   }[]
 >;
 export const useAllWeekPoints = (): {

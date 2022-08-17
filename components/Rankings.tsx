@@ -9,8 +9,6 @@ export const Rankings = () => {
   const { weekPoints, users } = useAllWeekPoints();
   const weeklyRankings = useWeekRankings();
 
-  console.log(weekPoints);
-
   const isLoading = !weekPoints;
 
   const noResultsYet = !Object.values(weekPoints)?.length;
@@ -66,7 +64,7 @@ export const Rankings = () => {
         <thead>
           <th align="left">Utilisateur</th>
           <th align="left">Points</th>
-          <th align="left">Avis sur l&apos;artiste (pas encore implémenté)</th>
+          <th align="left">Avis sur l&apos;artiste</th>
         </thead>
         {Object.entries(weekPoints)
           .sort(([day1], [day2]) => dayjs(day2).unix() - dayjs(day1).unix())
@@ -97,7 +95,7 @@ export const Rankings = () => {
                       <tr key={idx}>
                         <td>{value.firstName}</td>
                         <td>{`${value.amountOfPoints || 0} point(s)`}</td>
-                        <td></td>
+                        <td>{value.reaction}</td>
                       </tr>
                     ))}
                 </tbody>
