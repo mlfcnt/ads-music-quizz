@@ -95,7 +95,7 @@ export const Rankings = () => {
                       <tr key={idx}>
                         <td>{value.firstName}</td>
                         <td>{`${value.amountOfPoints || 0} point(s)`}</td>
-                        <td>{value.reaction}</td>
+                        <td style={{ fontSize: "200%" }}>{value.reaction}</td>
                       </tr>
                     ))}
                 </tbody>
