@@ -1,4 +1,4 @@
-import { Modal, Text, Space } from "@mantine/core";
+import { Modal, Text, Space, Button } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useLRAuth } from "loginradius-react";
 import { useRouter } from "next/router";
@@ -24,7 +24,6 @@ export const ReactionModal = ({
   artist,
 }: Props) => {
   const { user } = useLRAuth();
-  const reactions = ["👍", "👎", "💩", "🥰", "😀", "😭", "🤷‍♀️"];
   const router = useRouter();
 
   const handleReaction = async (reaction?: string) => {
@@ -59,12 +58,23 @@ export const ReactionModal = ({
   return (
     <Modal withCloseButton={false} opened={show} onClose={handleReaction}>
       <>
-        <Text size="lg">Qu&apos;avez vous pensé de ces chansons ?</Text>
+        <Text size="lg" align="center">
+          Qu&apos;avez vous pensé de ces chansons ?
+        </Text>
         <Space h="lg" />
         <Picker
           data={data}
           onEmojiSelect={(e: any) => handleReaction(e.native)}
+          locale="fr"
         />
+        <Space h="lg" />
+        <Button
+          key={"no-reaction"}
+          color="teal"
+          onClick={() => handleReaction()}
+        >
+          Ne pas partager d&apos;avis
+        </Button>
       </>
     </Modal>
   );
