@@ -11,12 +11,15 @@
     "test:ci": "jest --ci"
   },
   "dependencies": {
+    "@emoji-mart/data": "^1.0.5",
+    "@emoji-mart/react": "^1.0.1",
     "@mantine/core": "^4.2.9",
     "@mantine/hooks": "^4.2.9",
     "@mantine/next": "^4.2.9",
     "@mantine/notifications": "^4.2.10",
     "@supabase/supabase-js": "^1.35.3",
     "dayjs": "^1.11.3",
+    "emoji-mart": "^5.2.1",
     "lodash": "^4.17.21",
     "loginradius-react": "^0.2.0",
     "next": "12.1.6",

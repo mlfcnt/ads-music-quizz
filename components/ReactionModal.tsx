@@ -1,4 +1,4 @@
-import { Modal, Text, Space, Group, Button } from "@mantine/core";
+import { Modal, Text, Space } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useLRAuth } from "loginradius-react";
 import { useRouter } from "next/router";
@@ -6,6 +6,9 @@ import React from "react";
 import { Trophy } from "tabler-icons-react";
 import { saveUserPoints } from "../api/points";
 import { Artist } from "../api/spotify";
+import data from "@emoji-mart/data";
+//@ts-ignore
+import Picker from "@emoji-mart/react";
 
 type Props = {
   show: boolean;
@@ -56,29 +59,12 @@ export const ReactionModal = ({
   return (
     <Modal withCloseButton={false} opened={show} onClose={handleReaction}>
       <>
-        <Text size="lg">Qu&apos;avez vous pensé de cet artiste ?</Text>
+        <Text size="lg">Qu&apos;avez vous pensé de ces chansons ?</Text>
         <Space h="lg" />
-        <Group>
-          {reactions.map((reaction) => (
-            <Button
-              key={reaction}
-              size="xl"
-              color="gray"
-              value={reaction}
-              onClick={(e: any) => handleReaction(e.target.innerText)}
-            >
-              <span style={{ fontSize: "200%" }}>{reaction}</span>
-            </Button>
-          ))}
-          <Button
-            key={"no-reaction"}
-            color="gray"
-            onClick={() => handleReaction()}
-            size="xl"
-          >
-            Pas d&apos;avis
-          </Button>
-        </Group>
+        <Picker
+          data={data}
+          onEmojiSelect={(e: any) => handleReaction(e.native)}
+        />
       </>
     </Modal>
   );
