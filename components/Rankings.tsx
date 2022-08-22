@@ -25,7 +25,7 @@ export const Rankings = () => {
       <Space h="xl" />
       <Space h="xl" />
       <Space h="xl" />
-      <Title>Classement (beta = bugs à prévoir 🐛)</Title>
+      <Title>Classement</Title>
       <Space h="xl" />
       <Space h="xl" />
       <Table striped>
@@ -47,7 +47,9 @@ export const Rankings = () => {
             return (
               <tr key={userId}>
                 <td>{users.find((x) => x.Uid === userId)?.FirstName}</td>
-                <td>{`${points || 0} point(s) ${emojiByRanking(idx + 1)}`}</td>
+                <td style={{ fontSize: "100%" }}>{`${
+                  points || 0
+                } point(s) ${emojiByRanking(idx + 1)}`}</td>
               </tr>
             );
           })}
