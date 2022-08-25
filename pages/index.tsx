@@ -17,6 +17,7 @@ import { useToggle } from "react-use";
 import { LeaderAlert } from "../components/LeaderAlert";
 import { useCurrentUserIsLeader } from "../hooks/useCurrentUserIsLeader";
 import { ReactionModal } from "../components/ReactionModal";
+import { useUsers } from "../api/users";
 
 type Props = {
   artistForToday: ArtistForToday;
@@ -35,7 +36,10 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
     playlists.sort((a, b) => a.style.localeCompare(b.style)).map((x) => x.style)
   );
   const [openDrawer, setOpenDrawer] = useState(false);
-  const currentUserIsLeader = useCurrentUserIsLeader();
+
+  const { users } = useUsers();
+
+  const currentUserIsLeader = useCurrentUserIsLeader(users);
 
   const [showLeaderModal, toggleLeaderModal] = useToggle(false);
   const [showReactionModal, toggleReactionModal] = useToggle(false);
@@ -195,7 +199,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
           )}
         </>
       )}
-      {isClassicMode && <Rankings />}
+      {isClassicMode && <Rankings users={users} />}
       <Space h={"xl"} />
       <Space h={"xl"} />
       <Space h={"xl"} />

@@ -1,13 +1,14 @@
 import { Space, Table, Title } from "@mantine/core";
 import dayjs from "dayjs";
+import { User } from "loginradius-react/build/LRClient";
 import React from "react";
 import { useAllWeekPoints, useWeekRankings } from "../api/points";
 import { Artist } from "../api/spotify";
 import { emojiByRanking } from "../lib/misc";
 
-export const Rankings = () => {
-  const { weekPoints, users } = useAllWeekPoints();
-  const weeklyRankings = useWeekRankings();
+export const Rankings = ({ users: usersProps }: { users: User[] }) => {
+  const { weekPoints, users } = useAllWeekPoints(usersProps);
+  const weeklyRankings = useWeekRankings(usersProps);
 
   const isLoading = !weekPoints;
 

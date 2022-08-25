@@ -43,65 +43,48 @@ export type WeekPoints = Record<
     reaction?: string;
   }[]
 >;
-export const useAllWeekPoints = (): {
+export const useAllWeekPoints = (
+  users: User[]
+): {
   weekPoints: WeekPoints;
   users: User[];
 } => {
   const [weekPoints, setWeekPoints] = useState<WeekPoints>({});
-  const [users, setUsers] = useState<User[]>([]);
   const getWeekPoints = async () => {
     const { data } = await supabase.from("points").select("*");
     return data;
   };
   //TODO handle error
 
-  const getUsers = async (userIds: User["Uid"][]) => {
-    const uniqUsers = Array.from(new Set(userIds));
-    const users: User[] = [];
-    for (const userId of uniqUsers) {
-      const res = await fetch(
-        `https://api.loginradius.com/identity/v2/manage/account/${userId}?apiKey=${process.env.NEXT_PUBLIC_LOGINRADIUS_API_KEY}&apiSecret=${process.env.NEXT_PUBLIC_LOGINRADIUS_API_SECRET}`
-      );
-      const json = await res.json();
-      users.push(json);
-    }
-    return users;
-  };
-
   useEffect(() => {
     getWeekPoints().then((data) => {
       if (!data?.length) return;
-      const userIds = data.map((data) => data.userId);
-      if (!userIds) return;
-      getUsers(data.map((x) => x.userId)).then((users) => {
-        setUsers(users);
-        const dataWithUsernames = data.map((x) => ({
-          ...x,
-          firstName: users.find((user) => user.Uid === x.userId)?.FirstName,
-        }));
+      const dataWithUsernames = data.map((x) => ({
+        ...x,
+        firstName: users.find((user) => user.Uid === x.userId)?.FirstName,
+      }));
 
-        const filterForWeek = dataWithUsernames.filter((x) => {
-          return (
-            dayjs(x.createdAt).isBefore(
-              dayjs().endOf("week").subtract(2, "day")
-            ) && dayjs().startOf("week").isBefore(dayjs(x.created_at))
-          );
-        });
-
-        const grouppedByDate = groupBy(filterForWeek, (d) =>
-          dayjs(d.created_at).startOf("day")
+      const filterForWeek = dataWithUsernames.filter((x) => {
+        return (
+          dayjs(x.createdAt).isBefore(
+            dayjs().endOf("week").subtract(2, "day")
+          ) && dayjs().startOf("week").isBefore(dayjs(x.created_at))
         );
-
-        setWeekPoints(grouppedByDate);
       });
+
+      const grouppedByDate = groupBy(filterForWeek, (d) =>
+        dayjs(d.created_at).startOf("day")
+      );
+
+      setWeekPoints(grouppedByDate);
     });
-  }, []);
+  }, [users]);
 
   return { weekPoints, users };
 };
 
-export const useWeekRankings = () => {
-  const { weekPoints } = useAllWeekPoints();
+export const useWeekRankings = (users: User[]) => {
+  const { weekPoints } = useAllWeekPoints(users);
   const totalPointsPerUsers: Record<User["Uid"], number> = Object.values(
     weekPoints
   )
@@ -118,8 +101,8 @@ export const useWeekRankings = () => {
   );
 };
 
-export const useCurrentLeader = (): User["Uid"] | null => {
-  const weeklyRankings = useWeekRankings();
+export const useCurrentLeader = (users: User[]): User["Uid"] | null => {
+  const weeklyRankings = useWeekRankings(users);
   const maxScoreIs0 = weeklyRankings?.[0]?.[1] === 0;
   if (maxScoreIs0) return null;
 
