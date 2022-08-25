@@ -1,11 +1,12 @@
-import { Affix, Button, Group } from "@mantine/core";
+import { Affix, Button } from "@mantine/core";
 import React, { ReactNode } from "react";
 import { useLRAuth } from "loginradius-react";
 import { useCurrentUserIsLeader } from "../hooks/useCurrentUserIsLeader";
+import { User } from "loginradius-react/build/LRClient";
 
-export const Login = () => {
+export const Login = ({ users }: { users: User[] }) => {
   const { loginWithRedirect, logout, isAuthenticated, user } = useLRAuth();
-  const currentUserIsLeader = useCurrentUserIsLeader();
+  const currentUserIsLeader = useCurrentUserIsLeader(users);
 
   let content: ReactNode;
 
