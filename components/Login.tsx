@@ -25,7 +25,9 @@ export const Login = ({ users }: { users: User[] }) => {
             <span style={{ verticalAlign: "text-bottom" }}>👑</span>
           )}
         </p>
-        <Button onClick={() => logout()}>Déconnexion</Button>
+        <Button color={"orange"} onClick={() => logout()}>
+          Déconnexion
+        </Button>
       </>
     );
   }

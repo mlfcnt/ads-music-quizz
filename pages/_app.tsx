@@ -26,6 +26,19 @@ export default function App(props: AppProps) {
   return (
     <>
       <Head>
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/spooky_favicon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/spooky_favicon.png"
+        />
+
         <title>ADS music quizz</title>
         <meta
           name="viewport"
