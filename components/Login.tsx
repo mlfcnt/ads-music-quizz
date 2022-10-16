@@ -11,7 +11,11 @@ export const Login = ({ users }: { users: User[] }) => {
   let content: ReactNode;
 
   if (!isAuthenticated) {
-    content = <Button onClick={() => loginWithRedirect()}>Connexion</Button>;
+    content = (
+      <Button color={"orange"} onClick={() => loginWithRedirect()}>
+        Connexion
+      </Button>
+    );
   } else {
     content = (
       <>

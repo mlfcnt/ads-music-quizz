@@ -17,9 +17,18 @@ export const Default = ({ children }: Props) => {
       <Space h="xl" />
       <Login users={users} />
       <ThemeSwitcher />
-      <Title order={1} align="center" style={{ color: "lightblue" }}>
+      <Title
+        order={1}
+        align="center"
+        style={{ color: "lightblue" }}
+        className="main-title"
+      >
         ADS Music Quiz
       </Title>
+      <Title order={2} align="center" className="subtitle">
+        Halloween edition
+      </Title>
+
       <CountdownToNextGame />
       <Space h="lg" />
       <Rules />

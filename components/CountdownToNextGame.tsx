@@ -6,8 +6,8 @@ export const CountdownToNextGame = () => {
   const timeRemainingToNextArtist = useTimeRemainingToNextArtist();
 
   return (
-    <Text size="sm" align="center" color="dimmed">
-      Nouvel artiste mystère {timeRemainingToNextArtist} ...
+    <Text size="md" align="center" color="dimmed">
+      Nouvel artiste spooky {timeRemainingToNextArtist} ...
     </Text>
   );
 };

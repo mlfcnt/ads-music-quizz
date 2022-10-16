@@ -142,8 +142,9 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
       <Group position="right">
         <Button
           onClick={() => setOpenDrawer(true)}
-          variant="gradient"
-          gradient={{ from: "#ed6ea0", to: "#ec8c69", deg: 35 }}
+          // variant="gradient"
+          // gradient={{ from: "#ed6ea0", to: "#ec8c69", deg: 35 }}
+          color="orange"
         >
           Paramètres de jeu
         </Button>

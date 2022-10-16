@@ -21,7 +21,7 @@ export default function App(props: AppProps) {
   const { Component, pageProps } = props;
 
   const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+    setColorScheme(value || (colorScheme === "dark" ? "dark" : "dark"));
 
   return (
     <>
@@ -38,7 +38,7 @@ export default function App(props: AppProps) {
         redirectUri={"https://ads-music-quizz.vercel.app/"}
       >
         <ColorSchemeProvider
-          colorScheme={colorScheme}
+          colorScheme={"dark"}
           toggleColorScheme={toggleColorScheme}
         >
           <MantineProvider

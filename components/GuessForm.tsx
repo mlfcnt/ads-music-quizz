@@ -91,7 +91,7 @@ export const GuessForm = ({
             type="submit"
             onClick={(e: SyntheticEvent) => handleSubmit(e, artistToFind)}
             size="lg"
-            color="green"
+            color="orange"
             uppercase
           >
             <Group>
