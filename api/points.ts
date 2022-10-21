@@ -143,9 +143,12 @@ export const getAllTimeRankings = async (users: User[]) => {
           totalPoints: number;
         }>(
           (acc, curr) => {
+            //@ts-ignore
             if (acc[curr.userId]) {
+              //@ts-ignore
               acc[curr.userId] += curr.amountOfPoints;
             } else {
+              //@ts-ignore
               acc[curr.userId] = curr.amountOfPoints;
             }
             return acc;
@@ -191,6 +194,7 @@ export const getAllTimeRankings = async (users: User[]) => {
     week.map((y) => y.userId)
   );
   for (const userId of allUsersIds) {
+    //@ts-ignore
     final[users.find((x) => x.Uid === userId)?.FirstName] = test.filter(
       (x) => x === userId
     )?.length;
