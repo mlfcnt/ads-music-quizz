@@ -6,7 +6,7 @@ import { useUsers } from "../api/users";
 
 export const AllTimeVictoriesRankings = () => {
   const { users } = useUsers();
-  const { value: allTimeRankings } = useAsync(async () => {
+  const { loading, value: allTimeRankings } = useAsync(async () => {
     return getAllTimeRankings(users);
   }, [users]);
 
@@ -31,7 +31,7 @@ export const AllTimeVictoriesRankings = () => {
       </thead>
       <Space h={"md"} />
       <tbody>
-        {!Object.values(allTimeRankings)?.length && <p>Chargement...</p>}
+        {loading && <p>Chargement...</p>}
         {Object.entries(allTimeRankings!)
           .sort((a, b) => b[1] - a[1])
           .map(([name, victories]) => {
