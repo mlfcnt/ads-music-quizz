@@ -14,3 +14,8 @@ export const useCurrentUserIsLeader = (users: User[]) => {
 
   return isCurrentLeader;
 };
+
+export const useCurrentLeaderName = (users: User[]) => {
+  const currentLeaderId = useCurrentLeader(users);
+  return users.find((x) => x.Uid === currentLeaderId)?.FirstName;
+};

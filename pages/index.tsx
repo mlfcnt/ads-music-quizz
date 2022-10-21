@@ -15,9 +15,13 @@ import { GetNewFreeplayArtistButton } from "../components/GetNewFreeplayArtistBu
 import { Rankings } from "../components/Rankings";
 import { useToggle } from "react-use";
 import { LeaderAlert } from "../components/LeaderAlert";
-import { useCurrentUserIsLeader } from "../hooks/useCurrentUserIsLeader";
+import {
+  useCurrentLeaderName,
+  useCurrentUserIsLeader,
+} from "../hooks/useCurrentUserIsLeader";
 import { ReactionModal } from "../components/ReactionModal";
 import { useUsers } from "../api/users";
+import Head from "next/head";
 
 type Props = {
   artistForToday: ArtistForToday;
@@ -40,6 +44,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
   const { users } = useUsers();
 
   const currentUserIsLeader = useCurrentUserIsLeader(users);
+  const currentLeaderName = useCurrentLeaderName(users);
 
   const [showLeaderModal, toggleLeaderModal] = useToggle(false);
   const [showReactionModal, toggleReactionModal] = useToggle(false);
@@ -119,6 +124,10 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
 
   return (
     <>
+      <Head>
+        <title>{currentLeaderName}&apos;s kingdom 👑</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       {!artistForToday.id && <p>Erreur.. pas dartiste... bravo tommy</p>}
       <Drawer
         opened={openDrawer}

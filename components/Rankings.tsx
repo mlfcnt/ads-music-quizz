@@ -5,6 +5,7 @@ import React from "react";
 import { useAllWeekPoints, useWeekRankings } from "../api/points";
 import { Artist } from "../api/spotify";
 import { emojiByRanking } from "../lib/misc";
+import { AllTimeVictoriesRankings } from "./AllTimeVictoriesRankings";
 
 export const Rankings = ({ users: usersProps }: { users: User[] }) => {
   const { weekPoints, users } = useAllWeekPoints(usersProps);
@@ -109,6 +110,9 @@ export const Rankings = ({ users: usersProps }: { users: User[] }) => {
               </>
             );
           })}
+        <Space h="xl" />
+        <Space h="xl" />
+        <AllTimeVictoriesRankings />
       </Table>
     </>
   );
