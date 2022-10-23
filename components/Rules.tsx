@@ -5,7 +5,7 @@ export const Rules = () => {
   const [showModal, setShowModal] = useState(false);
   return (
     <div style={{ textAlign: "right" }}>
-      <Button color="gray" uppercase onClick={() => setShowModal(true)}>
+      <Button color="orange" uppercase onClick={() => setShowModal(true)}>
         Règles du jeu
       </Button>
       <Modal

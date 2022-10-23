@@ -11,15 +11,24 @@ type Props = {
 };
 
 export const Default = ({ children }: Props) => {
-  const { users } = useUsers();
+  const { data: users } = useUsers();
   return (
     <Container size={"xl"}>
       <Space h="xl" />
-      <Login users={users} />
+      <Login users={users || []} />
       <ThemeSwitcher />
-      <Title order={1} align="center" style={{ color: "lightblue" }}>
+      <Title
+        order={1}
+        align="center"
+        style={{ color: "lightblue" }}
+        className="main-title"
+      >
         ADS Music Quiz
       </Title>
+      <Title order={2} align="center" className="subtitle">
+        Halloween edition
+      </Title>
+
       <CountdownToNextGame />
       <Space h="lg" />
       <Rules />

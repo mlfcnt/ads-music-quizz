@@ -15,9 +15,13 @@ import { GetNewFreeplayArtistButton } from "../components/GetNewFreeplayArtistBu
 import { Rankings } from "../components/Rankings";
 import { useToggle } from "react-use";
 import { LeaderAlert } from "../components/LeaderAlert";
-import { useCurrentUserIsLeader } from "../hooks/useCurrentUserIsLeader";
+import {
+  useCurrentLeaderName,
+  useCurrentUserIsLeader,
+} from "../hooks/useCurrentUserIsLeader";
 import { ReactionModal } from "../components/ReactionModal";
 import { useUsers } from "../api/users";
+import Head from "next/head";
 
 type Props = {
   artistForToday: ArtistForToday;
@@ -37,9 +41,10 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
   );
   const [openDrawer, setOpenDrawer] = useState(false);
 
-  const { users } = useUsers();
+  const { data: users } = useUsers();
 
-  const currentUserIsLeader = useCurrentUserIsLeader(users);
+  const currentUserIsLeader = useCurrentUserIsLeader(users || []);
+  const currentLeaderName = useCurrentLeaderName(users || []);
 
   const [showLeaderModal, toggleLeaderModal] = useToggle(false);
   const [showReactionModal, toggleReactionModal] = useToggle(false);
@@ -119,6 +124,13 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
 
   return (
     <>
+      <Head>
+        {!currentLeaderName && <title>{currentLeaderName}ADS Music Quiz</title>}
+        {currentLeaderName && (
+          <title>ADS Music Quiz | {currentLeaderName} est en tête 👑</title>
+        )}
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       {!artistForToday.id && <p>Erreur.. pas dartiste... bravo tommy</p>}
       <Drawer
         opened={openDrawer}
@@ -142,8 +154,9 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
       <Group position="right">
         <Button
           onClick={() => setOpenDrawer(true)}
-          variant="gradient"
-          gradient={{ from: "#ed6ea0", to: "#ec8c69", deg: 35 }}
+          // variant="gradient"
+          // gradient={{ from: "#ed6ea0", to: "#ec8c69", deg: 35 }}
+          color="orange"
         >
           Paramètres de jeu
         </Button>
@@ -199,7 +212,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
           )}
         </>
       )}
-      {isClassicMode && <Rankings users={users} />}
+      {isClassicMode && <Rankings users={users || []} />}
       <Space h={"xl"} />
       <Space h={"xl"} />
       <Space h={"xl"} />

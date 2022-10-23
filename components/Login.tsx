@@ -11,7 +11,11 @@ export const Login = ({ users }: { users: User[] }) => {
   let content: ReactNode;
 
   if (!isAuthenticated) {
-    content = <Button onClick={() => loginWithRedirect()}>Connexion</Button>;
+    content = (
+      <Button color={"orange"} onClick={() => loginWithRedirect()}>
+        Connexion
+      </Button>
+    );
   } else {
     content = (
       <>
@@ -21,7 +25,9 @@ export const Login = ({ users }: { users: User[] }) => {
             <span style={{ verticalAlign: "text-bottom" }}>👑</span>
           )}
         </p>
-        <Button onClick={() => logout()}>Déconnexion</Button>
+        <Button color={"orange"} onClick={() => logout()}>
+          Déconnexion
+        </Button>
       </>
     );
   }

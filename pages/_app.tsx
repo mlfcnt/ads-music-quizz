@@ -11,6 +11,8 @@ import { Default as MainLayout } from "../layout/Default";
 import { LRAuthProvider } from "loginradius-react";
 
 import "../styles/globals.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function App(props: AppProps) {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -21,11 +23,26 @@ export default function App(props: AppProps) {
   const { Component, pageProps } = props;
 
   const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+    setColorScheme(value || (colorScheme === "dark" ? "dark" : "dark"));
+
+  const [queryClient] = useState(() => new QueryClient());
 
   return (
     <>
       <Head>
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/spooky_favicon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/spooky_favicon.png"
+        />
+
         <title>ADS music quizz</title>
         <meta
           name="viewport"
@@ -38,7 +55,7 @@ export default function App(props: AppProps) {
         redirectUri={"https://ads-music-quizz.vercel.app/"}
       >
         <ColorSchemeProvider
-          colorScheme={colorScheme}
+          colorScheme={"dark"}
           toggleColorScheme={toggleColorScheme}
         >
           <MantineProvider
@@ -50,9 +67,11 @@ export default function App(props: AppProps) {
             }}
           >
             <NotificationsProvider position="top-left" autoClose={3000}>
-              <MainLayout>
-                <Component {...pageProps} />
-              </MainLayout>
+              <QueryClientProvider client={queryClient}>
+                <MainLayout>
+                  <Component {...pageProps} />
+                </MainLayout>
+              </QueryClientProvider>
             </NotificationsProvider>
           </MantineProvider>
         </ColorSchemeProvider>

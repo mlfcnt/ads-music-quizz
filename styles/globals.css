@@ -1,3 +1,12 @@
+@font-face {
+  font-family: "Slimespooky";
+  src: url("/fonts/Slimespooky.ttf");
+}
+@font-face {
+  font-family: "Slimespooky_outline";
+  src: url("/fonts/Slimespooky_outline.ttf");
+}
+
 html,
 body {
   padding: 0;
@@ -23,4 +32,15 @@ a {
 
 .current-guess-checkbox > div > input {
   border: 3px solid gold !important;
+}
+
+.main-title {
+  color: green !important;
+  font-family: Slimespooky;
+  font-size: 500%;
+}
+.subtitle {
+  color: darkorange !important;
+  font-family: Slimespooky;
+  font-size: 300%;
 }

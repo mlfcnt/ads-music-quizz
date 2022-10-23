@@ -47,7 +47,7 @@ export const displayCorrectIcon = (guess: any, isCurrentGuess = false) => {
 };
 
 export const displayCorrectColor = (guess: any, isCurrentGuess = false) => {
-  if (isCurrent(isCurrentGuess)) return "green";
+  if (isCurrent(isCurrentGuess)) return "orange";
   if (isNext(guess)) return "cyan";
   if (isWrong(guess)) return "red";
   if (isCorrect(guess)) return "green";

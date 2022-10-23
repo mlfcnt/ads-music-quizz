@@ -43,6 +43,22 @@ export type WeekPoints = Record<
     reaction?: string;
   }[]
 >;
+
+type Point = {
+  id: number;
+  artistId: Artist["id"];
+  artistName: Artist["name"];
+  amountOfPoints: number;
+  created_at: Date;
+  reaction: string | null;
+  userId: User["ID"];
+};
+
+const getAllPoints = async () => {
+  const { data } = await supabase.from<Point>("points").select("*");
+  return data;
+};
+
 export const useAllWeekPoints = (
   users: User[]
 ): {
@@ -50,14 +66,9 @@ export const useAllWeekPoints = (
   users: User[];
 } => {
   const [weekPoints, setWeekPoints] = useState<WeekPoints>({});
-  const getWeekPoints = async () => {
-    const { data } = await supabase.from("points").select("*");
-    return data;
-  };
-  //TODO handle error
 
   useEffect(() => {
-    getWeekPoints().then((data) => {
+    getAllPoints().then((data) => {
       if (!data?.length) return;
       const dataWithUsernames = data.map((x) => ({
         ...x,
@@ -66,7 +77,7 @@ export const useAllWeekPoints = (
 
       const filterForWeek = dataWithUsernames.filter((x) => {
         return (
-          dayjs(x.createdAt).isBefore(
+          dayjs(x.created_at).isBefore(
             dayjs().endOf("week").subtract(2, "day")
           ) && dayjs().startOf("week").isBefore(dayjs(x.created_at))
         );
@@ -75,7 +86,7 @@ export const useAllWeekPoints = (
       const grouppedByDate = groupBy(filterForWeek, (d) =>
         dayjs(d.created_at).startOf("day")
       );
-
+      //@ts-ignore
       setWeekPoints(grouppedByDate);
     });
   }, [users]);
@@ -108,4 +119,86 @@ export const useCurrentLeader = (users: User[]): User["Uid"] | null => {
 
   const leaderId = weeklyRankings?.[0]?.[0];
   return leaderId;
+};
+
+export const getAllTimeRankings = async (users?: User[]) => {
+  if (!users) return {};
+  type DateString = string;
+  const res = await getAllPoints();
+
+  const grouppedByWeek: Record<DateString, Point[]> = groupBy(res, (r) =>
+    dayjs(r.created_at).startOf("week").format()
+  );
+
+  const currentWeek = dayjs().startOf("week").format();
+  delete grouppedByWeek[currentWeek]; // on en traite pas la semaine en cours
+
+  const allWeeks = Object.keys(grouppedByWeek);
+
+  const totalPointsPerUsersPerWeek: Record<DateString, number[]> =
+    allWeeks.reduce((acc, week) => {
+      acc = {
+        ...acc,
+        [week]: grouppedByWeek[week].reduce<{
+          userId: User["Uid"];
+          totalPoints: number;
+        }>(
+          (acc, curr) => {
+            //@ts-ignore
+            if (acc[curr.userId]) {
+              //@ts-ignore
+              acc[curr.userId] += curr.amountOfPoints;
+            } else {
+              //@ts-ignore
+              acc[curr.userId] = curr.amountOfPoints;
+            }
+            return acc;
+          },
+          {} as {
+            userId: User["Uid"];
+            totalPoints: number;
+          }
+        ),
+      };
+      return acc;
+    }, {});
+
+  const winnersPerWeek: Record<DateString, User["Uid"][]> = allWeeks.reduce(
+    (acc, week) => {
+      acc = {
+        ...acc,
+        [week]: Object.entries(totalPointsPerUsersPerWeek[week]).reduce<
+          { userId: User["Uid"]; totalPoints: number }[]
+        >(
+          (acc, [userId, userPointsForWeek]) => {
+            if (acc[0].totalPoints < userPointsForWeek) {
+              acc = [{ userId, totalPoints: userPointsForWeek }];
+            } else if (acc[0].totalPoints === userPointsForWeek) {
+              acc = [...acc, { userId, totalPoints: userPointsForWeek }];
+            } else return acc;
+            return acc;
+          },
+          [{ userId: "null", totalPoints: 0 }]
+        ),
+      };
+      return acc;
+    },
+    {}
+  );
+
+  const allUsersIds = users.map((x) => x.Uid);
+
+  const final: Record<User["Uid"], number> = {};
+
+  const test = Object.values(winnersPerWeek).flatMap((week) =>
+    //@ts-ignore jai niqué le type qq part
+    week.map((y) => y.userId)
+  );
+  for (const userId of allUsersIds) {
+    //@ts-ignore
+    final[users.find((x) => x.Uid === userId)?.FirstName] = test.filter(
+      (x) => x === userId
+    )?.length;
+  }
+  return final;
 };

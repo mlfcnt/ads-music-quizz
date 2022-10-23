@@ -5,6 +5,7 @@ import React from "react";
 import { useAllWeekPoints, useWeekRankings } from "../api/points";
 import { Artist } from "../api/spotify";
 import { emojiByRanking } from "../lib/misc";
+import { AllTimeVictoriesRankings } from "./AllTimeVictoriesRankings";
 
 export const Rankings = ({ users: usersProps }: { users: User[] }) => {
   const { weekPoints, users } = useAllWeekPoints(usersProps);
@@ -31,7 +32,7 @@ export const Rankings = ({ users: usersProps }: { users: User[] }) => {
       <Space h="xl" />
       <Table striped>
         <thead>
-          <th style={{ fontWeight: "bold", color: "gold" }}>
+          <th style={{ fontWeight: "bold", color: "darkorange" }}>
             Cummulé (semaine en cours)
           </th>
         </thead>
@@ -59,7 +60,11 @@ export const Rankings = ({ users: usersProps }: { users: User[] }) => {
         <Space h="xl" />
         <thead>
           <th
-            style={{ fontWeight: "bold", color: "gold", margin: "left auto" }}
+            style={{
+              fontWeight: "bold",
+              color: "darkorange",
+              margin: "left auto",
+            }}
           >
             Par jour
           </th>
@@ -105,6 +110,9 @@ export const Rankings = ({ users: usersProps }: { users: User[] }) => {
               </>
             );
           })}
+        <Space h="xl" />
+        <Space h="xl" />
+        <AllTimeVictoriesRankings />
       </Table>
     </>
   );
