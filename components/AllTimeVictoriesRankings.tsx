@@ -5,7 +5,7 @@ import { getAllTimeRankings } from "../api/points";
 import { useUsers } from "../api/users";
 
 export const AllTimeVictoriesRankings = () => {
-  const { users } = useUsers();
+  const { data: users } = useUsers();
   const { loading, value: allTimeRankings } = useAsync(async () => {
     return getAllTimeRankings(users);
   }, [users]);

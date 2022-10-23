@@ -121,7 +121,8 @@ export const useCurrentLeader = (users: User[]): User["Uid"] | null => {
   return leaderId;
 };
 
-export const getAllTimeRankings = async (users: User[]) => {
+export const getAllTimeRankings = async (users?: User[]) => {
+  if (!users) return {};
   type DateString = string;
   const res = await getAllPoints();
 

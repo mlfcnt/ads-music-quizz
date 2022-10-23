@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { User } from "loginradius-react/build/LRClient";
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
@@ -17,13 +18,4 @@ const fetchAllUsers = async () => {
   return users;
 };
 
-export const useUsers = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  useEffect(() => {
-    fetchAllUsers().then((users) => {
-      setUsers(users);
-    });
-  }, []);
-
-  return { users };
-};
+export const useUsers = () => useQuery<User[]>(["users"], fetchAllUsers);

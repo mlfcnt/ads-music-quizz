@@ -11,11 +11,11 @@ type Props = {
 };
 
 export const Default = ({ children }: Props) => {
-  const { users } = useUsers();
+  const { data: users } = useUsers();
   return (
     <Container size={"xl"}>
       <Space h="xl" />
-      <Login users={users} />
+      <Login users={users || []} />
       <ThemeSwitcher />
       <Title
         order={1}

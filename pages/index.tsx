@@ -41,10 +41,10 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
   );
   const [openDrawer, setOpenDrawer] = useState(false);
 
-  const { users } = useUsers();
+  const { data: users } = useUsers();
 
-  const currentUserIsLeader = useCurrentUserIsLeader(users);
-  const currentLeaderName = useCurrentLeaderName(users);
+  const currentUserIsLeader = useCurrentUserIsLeader(users || []);
+  const currentLeaderName = useCurrentLeaderName(users || []);
 
   const [showLeaderModal, toggleLeaderModal] = useToggle(false);
   const [showReactionModal, toggleReactionModal] = useToggle(false);
@@ -125,7 +125,10 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
   return (
     <>
       <Head>
-        <title>{currentLeaderName}&apos;s kingdom 👑</title>
+        {!currentLeaderName && <title>{currentLeaderName}ADS Music Quiz</title>}
+        {currentLeaderName && (
+          <title>ADS Music Quiz | {currentLeaderName} est en tête 👑</title>
+        )}
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       {!artistForToday.id && <p>Erreur.. pas dartiste... bravo tommy</p>}

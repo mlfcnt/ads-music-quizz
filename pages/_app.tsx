@@ -11,6 +11,8 @@ import { Default as MainLayout } from "../layout/Default";
 import { LRAuthProvider } from "loginradius-react";
 
 import "../styles/globals.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function App(props: AppProps) {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -22,6 +24,8 @@ export default function App(props: AppProps) {
 
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "dark" : "dark"));
+
+  const [queryClient] = useState(() => new QueryClient());
 
   return (
     <>
@@ -63,9 +67,11 @@ export default function App(props: AppProps) {
             }}
           >
             <NotificationsProvider position="top-left" autoClose={3000}>
-              <MainLayout>
-                <Component {...pageProps} />
-              </MainLayout>
+              <QueryClientProvider client={queryClient}>
+                <MainLayout>
+                  <Component {...pageProps} />
+                </MainLayout>
+              </QueryClientProvider>
             </NotificationsProvider>
           </MantineProvider>
         </ColorSchemeProvider>
