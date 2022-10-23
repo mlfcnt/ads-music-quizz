@@ -212,7 +212,7 @@ const Home: NextPage<Props> = ({ artistForToday }) => {
           )}
         </>
       )}
-      {isClassicMode && <Rankings users={users} />}
+      {isClassicMode && <Rankings users={users || []} />}
       <Space h={"xl"} />
       <Space h={"xl"} />
       <Space h={"xl"} />
